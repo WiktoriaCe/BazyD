@@ -2,6 +2,6 @@ from django.shortcuts import render
 
 def index(request):
     context = {
-        "title": "Django example",
+        "title": "Medical Research Database",
     }
-    return render(request, "index.html", context)
+    return render(request, "landing.html", context)
