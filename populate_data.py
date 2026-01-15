@@ -24,16 +24,32 @@ def create_sample_data():
     print("Tworzenie przykładowych danych...")
     
     # Stwórz użytkowników
-    if not User.objects.filter(username='researcher').exists():
-        researcher = User.objects.create_user(
-            username='researcher',
-            email='researcher@example.com',
-            password='password123',
-            first_name='John',
-            last_name='Smith'
+    researchers_data = [
+        {'username': 'researcher', 'email': 'researcher@example.com', 'first_name': 'John', 'last_name': 'Smith'},
+        {'username': 'anna_kowalska', 'email': 'anna.kowalska@example.com', 'first_name': 'Anna', 'last_name': 'Kowalska'},
+        {'username': 'piotr_nowak', 'email': 'piotr.nowak@example.com', 'first_name': 'Piotr', 'last_name': 'Nowak'},
+        {'username': 'maria_lewandowska', 'email': 'maria.lewandowska@example.com', 'first_name': 'Maria', 'last_name': 'Lewandowska'},
+        {'username': 'jan_szymczak', 'email': 'jan.szymczak@example.com', 'first_name': 'Jan', 'last_name': 'Szymczak'},
+        {'username': 'katarzyna_wilk', 'email': 'katarzyna.wilk@example.com', 'first_name': 'Katarzyna', 'last_name': 'Wilk'},
+        {'username': 'rafal_michalski', 'email': 'rafal.michalski@example.com', 'first_name': 'Rafał', 'last_name': 'Michalski'},
+        {'username': 'beata_walczak', 'email': 'beata.walczak@example.com', 'first_name': 'Beata', 'last_name': 'Walczak'},
+        {'username': 'tomasz_sokolowski', 'email': 'tomasz.sokolowski@example.com', 'first_name': 'Tomasz', 'last_name': 'Sokołowski'},
+        {'username': 'natalia_ostrowska', 'email': 'natalia.ostrowska@example.com', 'first_name': 'Natalia', 'last_name': 'Ostrowska'},
+        {'username': 'sebastian_kucharski', 'email': 'sebastian.kucharski@example.com', 'first_name': 'Sebastian', 'last_name': 'Kucharski'},
+    ]
+    
+    researchers = []
+    for data in researchers_data:
+        r, created = User.objects.get_or_create(
+            username=data['username'],
+            defaults={**data, 'password': 'password123'}
         )
-    else:
-        researcher = User.objects.get(username='researcher')
+        if created:  # Jeśli user nie istniał, ustaw hasło
+            r.set_password('password123')
+            r.save()
+        researchers.append(r)
+    researcher = researchers[0]  # Główny researcher do eksperymentów
+    print(f"✓ Stworzone {len(researchers)} konta badaczy")
     
     # Stwórz linie komórkowe
     cell_lines_data = [
@@ -68,6 +84,54 @@ def create_sample_data():
             'tissue_type': 'ovarian',
             'passage_number': 200,
             'description': 'Chinese hamster ovary cells'
+        },
+        {
+            'name': 'A549',
+            'cell_type': 'cancer',
+            'origin': 'human',
+            'tissue_type': 'epithelial',
+            'passage_number': 120,
+            'description': 'Human lung carcinoma cells'
+        },
+        {
+            'name': 'U87',
+            'cell_type': 'cancer',
+            'origin': 'human',
+            'tissue_type': 'glial',
+            'passage_number': 95,
+            'description': 'Human glioblastoma cells'
+        },
+        {
+            'name': 'MDCK',
+            'cell_type': 'normal',
+            'origin': 'dog',
+            'tissue_type': 'epithelial',
+            'passage_number': 180,
+            'description': 'Canine kidney epithelial cells'
+        },
+        {
+            'name': 'Jurkat',
+            'cell_type': 'cancer',
+            'origin': 'human',
+            'tissue_type': 'hematopoietic',
+            'passage_number': 230,
+            'description': 'Human T-cell leukemia cells'
+        },
+        {
+            'name': 'HepG2',
+            'cell_type': 'cancer',
+            'origin': 'human',
+            'tissue_type': 'hepatic',
+            'passage_number': 130,
+            'description': 'Human hepatocellular carcinoma cells'
+        },
+        {
+            'name': 'NSC34',
+            'cell_type': 'normal',
+            'origin': 'mouse',
+            'tissue_type': 'neuronal',
+            'passage_number': 110,
+            'description': 'Mouse motor neuron cells'
         },
     ]
     
@@ -112,6 +176,56 @@ def create_sample_data():
             'health_status': 'healthy',
             'source': 'Charles River Labs'
         },
+        {
+            'name': 'NOD-SCID-Mouse-001',
+            'species': 'mouse',
+            'strain': 'NOD/SCID',
+            'age_weeks': 8,
+            'sex': 'F',
+            'weight_grams': 22.1,
+            'health_status': 'healthy',
+            'source': 'Jackson Laboratory'
+        },
+        {
+            'name': 'FVB-Mouse-001',
+            'species': 'mouse',
+            'strain': 'FVB/N',
+            'age_weeks': 14,
+            'sex': 'M',
+            'weight_grams': 27.8,
+            'health_status': 'healthy',
+            'source': 'Charles River Labs'
+        },
+        {
+            'name': 'Lewis-Rat-001',
+            'species': 'rat',
+            'strain': 'Lewis',
+            'age_weeks': 12,
+            'sex': 'M',
+            'weight_grams': 280,
+            'health_status': 'healthy',
+            'source': 'Charles River Labs'
+        },
+        {
+            'name': 'AB-Zebrafish-001',
+            'species': 'zebrafish',
+            'strain': 'AB',
+            'age_weeks': 24,
+            'sex': 'M',
+            'weight_grams': 0.5,
+            'health_status': 'healthy',
+            'source': 'University Fish Facility'
+        },
+        {
+            'name': 'TuEL-Drosophila-001',
+            'species': 'drosophila',
+            'strain': 'w1118',
+            'age_weeks': 1,
+            'sex': 'M',
+            'weight_grams': 0.001,
+            'health_status': 'healthy',
+            'source': 'Bloomington Drosophila Stock Center'
+        },
     ]
     
     animal_models = []
@@ -145,6 +259,34 @@ def create_sample_data():
             'objective': 'Quantify mRNA expression levels',
             'methodology': 'Real-time qPCR with GAPDH normalization',
             'description': 'qPCR protocol for gene expression analysis'
+        },
+        {
+            'title': 'Flow Cytometry Analysis',
+            'experiment_type': 'in_vitro',
+            'objective': 'Determine cell surface markers and apoptosis',
+            'methodology': 'Fluorescent antibody staining and FACS analysis',
+            'description': 'Flow cytometry protocol for cell characterization'
+        },
+        {
+            'title': 'Western Blotting Protocol',
+            'experiment_type': 'in_vitro',
+            'objective': 'Detect protein expression and modifications',
+            'methodology': 'SDS-PAGE and immunodetection',
+            'description': 'Standard Western blot protocol for protein analysis'
+        },
+        {
+            'title': 'Immunohistochemistry Analysis',
+            'experiment_type': 'in_vivo',
+            'objective': 'Visualize protein localization in tissues',
+            'methodology': 'Tissue sectioning, antibody staining, and imaging',
+            'description': 'IHC protocol for tissue analysis'
+        },
+        {
+            'title': 'Pharmacokinetics Study',
+            'experiment_type': 'in_vivo',
+            'objective': 'Measure drug absorption and distribution',
+            'methodology': 'Plasma sampling and LC-MS/MS analysis',
+            'description': 'PK protocol for drug disposition studies'
         },
     ]
     
@@ -188,6 +330,51 @@ def create_sample_data():
             'principal_investigator': researcher,
             'lab': 'Lab A - Oncology',
         },
+        {
+            'title': 'Flow Cytometry - Apoptosis Assessment',
+            'protocol': protocols[3],
+            'status': 'completed',
+            'start_date': start_date - timedelta(days=15),
+            'end_date': start_date - timedelta(days=10),
+            'principal_investigator': researchers[1],
+            'lab': 'Lab C - Flow Cytometry',
+        },
+        {
+            'title': 'Protein Expression in Drug-Treated Cells',
+            'protocol': protocols[4],
+            'status': 'ongoing',
+            'start_date': start_date + timedelta(days=5),
+            'end_date': None,
+            'principal_investigator': researchers[2],
+            'lab': 'Lab A - Oncology',
+        },
+        {
+            'title': 'Tumor Tissue Immunostaining',
+            'protocol': protocols[5],
+            'status': 'completed',
+            'start_date': start_date - timedelta(days=20),
+            'end_date': start_date - timedelta(days=12),
+            'principal_investigator': researchers[3],
+            'lab': 'Lab D - Pathology',
+        },
+        {
+            'title': 'Pharmacokinetic Profile - Drug A',
+            'protocol': protocols[6],
+            'status': 'ongoing',
+            'start_date': start_date + timedelta(days=2),
+            'end_date': None,
+            'principal_investigator': researchers[4],
+            'lab': 'Lab E - PK/PD',
+        },
+        {
+            'title': 'Long-term Toxicity Study in Rats',
+            'protocol': protocols[1],
+            'status': 'ongoing',
+            'start_date': start_date - timedelta(days=30),
+            'end_date': None,
+            'principal_investigator': researchers[5],
+            'lab': 'Lab B - In Vivo',
+        },
     ]
     
     experiments = []
@@ -209,6 +396,17 @@ def create_sample_data():
         
         {'experiment': experiments[2], 'cell_line': cell_lines[1], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 6},
         {'experiment': experiments[2], 'cell_line': cell_lines[1], 'treatment': 'Drug Y', 'concentration': 5, 'duration_hours': 6},
+        
+        {'experiment': experiments[3], 'cell_line': cell_lines[2], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 48},
+        {'experiment': experiments[3], 'cell_line': cell_lines[2], 'treatment': 'Drug Z', 'concentration': 2.5, 'duration_hours': 48},
+        {'experiment': experiments[3], 'cell_line': cell_lines[2], 'treatment': 'Drug Z', 'concentration': 5.0, 'duration_hours': 48},
+        
+        {'experiment': experiments[4], 'cell_line': cell_lines[3], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 4},
+        {'experiment': experiments[4], 'cell_line': cell_lines[3], 'treatment': 'Compound A', 'concentration': 1, 'duration_hours': 4},
+        {'experiment': experiments[4], 'cell_line': cell_lines[3], 'treatment': 'Compound A', 'concentration': 10, 'duration_hours': 4},
+        
+        {'experiment': experiments[6], 'cell_line': cell_lines[4], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 12},
+        {'experiment': experiments[6], 'cell_line': cell_lines[4], 'treatment': 'Drug A', 'concentration': 0.5, 'duration_hours': 12},
     ]
     
     samples = []
@@ -242,10 +440,18 @@ def create_sample_data():
     
     # Dodaj wyniki
     results_data = [
+        {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[0], 'value': 100},
         {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[1], 'value': 95},
         {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[2], 'value': 75},
         {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[3], 'value': 45},
-        {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[0], 'value': 100},
+        
+        {'experiment': experiments[3], 'parameter_name': 'apoptotic_cells', 'unit': '%', 'method': 'Flow Cytometry', 'sample': samples[6], 'value': 5.2},
+        {'experiment': experiments[3], 'parameter_name': 'apoptotic_cells', 'unit': '%', 'method': 'Flow Cytometry', 'sample': samples[7], 'value': 32.5},
+        {'experiment': experiments[3], 'parameter_name': 'apoptotic_cells', 'unit': '%', 'method': 'Flow Cytometry', 'sample': samples[8], 'value': 58.3},
+        
+        {'experiment': experiments[4], 'parameter_name': 'protein_level', 'unit': 'ng/mL', 'method': 'Western Blot', 'sample': samples[9], 'value': 150},
+        {'experiment': experiments[4], 'parameter_name': 'protein_level', 'unit': 'ng/mL', 'method': 'Western Blot', 'sample': samples[10], 'value': 240},
+        {'experiment': experiments[4], 'parameter_name': 'protein_level', 'unit': 'ng/mL', 'method': 'Western Blot', 'sample': samples[11], 'value': 380},
     ]
     
     results = []
