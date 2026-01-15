@@ -22,15 +22,15 @@ def create_sample_data():
     """Stwórz przykładowe dane"""
     
     print("Tworzenie przykładowych danych...")
-    
+
     # Stwórz użytkowników
     researchers_data = [
-        {'username': 'researcher', 'email': 'researcher@example.com', 'first_name': 'John', 'last_name': 'Smith'},
+        {'username': 'jan_kowalski', 'email': 'jan.kowalski@example.com', 'first_name': 'Jan', 'last_name': 'Kowalski'},
         {'username': 'anna_kowalska', 'email': 'anna.kowalska@example.com', 'first_name': 'Anna', 'last_name': 'Kowalska'},
         {'username': 'piotr_nowak', 'email': 'piotr.nowak@example.com', 'first_name': 'Piotr', 'last_name': 'Nowak'},
         {'username': 'maria_lewandowska', 'email': 'maria.lewandowska@example.com', 'first_name': 'Maria', 'last_name': 'Lewandowska'},
         {'username': 'jan_szymczak', 'email': 'jan.szymczak@example.com', 'first_name': 'Jan', 'last_name': 'Szymczak'},
-        {'username': 'katarzyna_wilk', 'email': 'katarzyna.wilk@example.com', 'first_name': 'Katarzyna', 'last_name': 'Wilk'},
+        {'username': 'katarzyna_wilk', 'email': 'katarzyna.wilk@example.com', 'first_name': 'Katarzyna', 'last_name': 'Wilk'}
         {'username': 'rafal_michalski', 'email': 'rafal.michalski@example.com', 'first_name': 'Rafał', 'last_name': 'Michalski'},
         {'username': 'beata_walczak', 'email': 'beata.walczak@example.com', 'first_name': 'Beata', 'last_name': 'Walczak'},
         {'username': 'tomasz_sokolowski', 'email': 'tomasz.sokolowski@example.com', 'first_name': 'Tomasz', 'last_name': 'Sokołowski'},
