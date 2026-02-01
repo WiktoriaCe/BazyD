@@ -1,6 +1,6 @@
 # GitHub Setup Guide
 
-## 🎯 Publikacja projektu na GitHub
+##  Publikacja projektu na GitHub
 
 ### Krok 1: Stwórz nowe repozytorium na GitHub
 
@@ -58,7 +58,7 @@ jobs:
       run: python manage.py test research
 ```
 
-## 📋 Checklist przed publikacją
+## Checklist przed publikacją
 
 - [ ] Zmień `SECRET_KEY` w `.env`
 - [ ] Ustawić `DEBUG=False` dla produkcji
@@ -68,7 +68,7 @@ jobs:
 - [ ] Sprawdzić migracje są committed
 - [ ] Uruchomić testy: `python manage.py test research`
 
-## 🔐 Konfiguracja dla Produkcji
+##  Konfiguracja dla Produkcji
 
 ### Plik `.env` (NIE commituj!)
 
@@ -79,7 +79,7 @@ ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
 DATABASE_URL=postgresql://user:password@localhost:5432/medical_research_db
 ```
 
-## 🚀 Deployment Opcje
+##  Deployment Opcje
 
 ### 1. Heroku
 
@@ -117,7 +117,7 @@ heroku run python manage.py createsuperuser
 
 Użyj Gunicorn + Nginx + Postgres
 
-## 📝 README.md dla GitHub
+##  README.md dla GitHub
 
 Projekt zawiera kompletny README.md z:
 - Quick start instrukcjami
@@ -125,7 +125,7 @@ Projekt zawiera kompletny README.md z:
 - Przykładami użycia
 - Instrukcjami deployment
 
-## 🏷️ Sugerowane tagi/labels na GitHub
+##  Sugerowane tagi/labels na GitHub
 
 - `django` - Frameworka
 - `rest-api` - API
@@ -134,7 +134,7 @@ Projekt zawiera kompletny README.md z:
 - `n-m-relationships` - Funkcjonalność
 - `python` - Język
 
-## 📊 Sugerowane tematy (Topics)
+##  Sugerowane tematy (Topics)
 
 - django
 - rest-api
@@ -142,17 +142,17 @@ Projekt zawiera kompletny README.md z:
 - python
 - database
 
-## 🔄 CI/CD Pipeline (GitHub Actions)
+##  CI/CD Pipeline (GitHub Actions)
 
 Projekt jest gotowy dla automatycznych testów i deploymentu.
 
-## 📞 Support Links do Include
+##  Support Links do Include
 
 - Documentation: `/API_DOCUMENTATION.md`
 - Technical: `/TECHNICAL_DOCUMENTATION.md`
 - Project Summary: `/PROJECT_SUMMARY.md`
 
-## ✅ Commit History
+##  Commit History
 
 Projekt ma czystą historię commitów:
 
@@ -161,7 +161,7 @@ Projekt ma czystą historię commitów:
 3. **Technical documentation**: Dokumentacja architekturalneaj
 4. **Project summary**: Podsumowanie i statystyki
 
-## 🎓 Instrukcje dla Użytkowników
+##  Instrukcje dla Użytkowników
 
 Po sklonowaniu repozytorium z GitHub:
 
@@ -185,11 +185,11 @@ python manage.py runserver
 # admin / admin123
 ```
 
-## 🤝 Contributing Guide (opcjonalnie)
+##  Contributing Guide (opcjonalnie)
 
 Możesz dodać `CONTRIBUTING.md` z instrukcjami dla contributors.
 
-## 📜 Licencja
+##  Licencja
 
 Projekt zawiera domyślnie MIT License. Jeśli chcesz zmienić, stwórz plik `LICENSE`:
 
@@ -201,10 +201,5 @@ Copyright (c) 2025 Medical Research Team
 Permission is hereby granted, free of charge...
 ```
 
-## 🎉 Gotowe!
 
-Po wykonaniu powyższych kroków Twój projekt będzie dostępny na GitHub i gotowy dla całej społeczności!
 
----
-
-**Pytania?** Sprawdź dokumentację w pliku głównym projektu.

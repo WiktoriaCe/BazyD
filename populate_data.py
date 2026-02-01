@@ -497,7 +497,14 @@ def create_sample_data():
         docs.append(doc)
     print(f"✓ Dodane {len(docs)} dokumenty")
     
-    print("\n Wszystkie dane zostały stworzone pomyślnie!")
+    # Utwórz superużytkownika do panelu admina, jeśli nie istnieje
+    if not User.objects.filter(username='researcher').exists():
+        User.objects.create_superuser('researcher', 'researcher@example.com', 'password123')
+        print("✓ Stworzono superużytkownika 'researcher' z hasłem 'password123'")
+    else:
+        print("✓ Superużytkownik 'researcher' już istnieje")
+    
+    print("\nWszystkie dane zostały stworzone pomyślnie!")
     print(f"\nPrzypomnienie: Zaloguj się na http://localhost:8000/admin/")
     print(f"Użytkownik: researcher | Hasło: password123")
 

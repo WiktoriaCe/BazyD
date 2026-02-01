@@ -1,32 +1,28 @@
-# 🚀 START HERE - Medical Research Database
+#  START HERE - Medical Research Database
 
-## Witaj! 👋
+##  Szybki Start (5 minut)
 
-Właśnie pobrałeś/pobrałaś kompleksowy system zarządzania badaniami medycznymi w Django.
-
-## ⚡ Szybki Start (5 minut)
-
-### 1️⃣ Zainstaluj zależności
+### 1️ Zainstaluj zależności
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Migruj bazę danych
+### 2️ Migruj bazę danych
 ```bash
 python manage.py migrate
 ```
 
-### 3️⃣ Załaduj przykładowe dane
+### 3️ Załaduj przykładowe dane
 ```bash
 python populate_data.py
 ```
 
-### 4️⃣ Uruchom serwer
+### 4️ Uruchom serwer
 ```bash
 python manage.py runserver
 ```
 
-### 5️⃣ Otwórz w przeglądarce
+### 5️ Otwórz w przeglądarce
 - **Admin**: http://localhost:8000/admin/
   - Login: `admin` / `admin123`
 - **API**: http://localhost:8000/api/
@@ -34,7 +30,7 @@ python manage.py runserver
 
 ---
 
-## 📚 Dokumentacja
+##  Dokumentacja
 
 | Plik | Zawartość |
 |------|-----------|
@@ -44,22 +40,22 @@ python manage.py runserver
 | **PROJECT_SUMMARY.md** | Statystyki i podsumowanie |
 | **GITHUB_SETUP.md** | Jak opublikować na GitHub |
 
-👉 **Zacznij od: README.md**
+ **Zacznij od: README.md**
 
 ---
 
-## 🎯 Co to jest?
+##  Co to jest?
 
 System do zarządzania badaniami medycznymi z:
-- ✅ **9 modeli danych** (linie komórkowe, modele zwierzęce, eksperymenty, itp.)
-- ✅ **RESTful API** (90+ endpoints)
-- ✅ **Django Admin** (interfejs webowy)
-- ✅ **Raporty** (podsumowania, statystyki)
-- ✅ **Autoryzacja** (token-based)
+-  **9 modeli danych** (linie komórkowe, modele zwierzęce, eksperymenty, itp.)
+-  **RESTful API** (90+ endpoints)
+-  **Django Admin** (interfejs webowy)
+-  **Raporty** (podsumowania, statystyki)
+-  **Autoryzacja** (token-based)
 
 ---
 
-## 🔐 Autentykacja API
+##  Autentykacja API
 
 ### Uzyskaj token
 ```bash
@@ -76,7 +72,7 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 
 ---
 
-## 📊 Struktura projektu
+##  Struktura projektu
 
 ```
 medical-research-db/
