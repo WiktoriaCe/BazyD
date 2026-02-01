@@ -1,5 +1,7 @@
 # Dokumentacja techniczna - Medical Research Database
 
+> **NOTE:** The API layer has been removed from this codebase (branch `remove-api`). The sections below referencing API behavior are retained for historical context but are no longer accurate.
+
 ## Architektura systemu
 
 ### Warstwa modeli (ORM)

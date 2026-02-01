@@ -1,5 +1,7 @@
 #  START HERE - Medical Research Database
 
+> **NOTE:** API endpoints have been removed from the backend on branch `remove-api` — documentation may reference legacy API.
+
 ##  Szybki Start (5 minut)
 
 ### 1️ Zainstaluj zależności
@@ -25,8 +27,8 @@ python manage.py runserver
 ### 5️ Otwórz w przeglądarce
 - **Admin**: http://localhost:8000/admin/
   - Login: `admin` / `admin123`
-- **API**: http://localhost:8000/api/
-  - Wymaga autentykacji (token)
+
+> **Uwaga:** API została usunięta z backendu na branchu `remove-api`. Dokumentacja i przykłady API mogą być nieaktualne.
 
 ---
 
