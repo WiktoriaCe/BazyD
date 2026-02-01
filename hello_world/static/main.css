@@ -90,25 +90,6 @@ nav a:hover {
   line-height: 1.6;
 }
 
-.features-list {
-  list-style: none;
-  margin-bottom: 40px;
-}
-
-.features-list li {
-  padding: 12px 0;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.features-list li:before {
-  content: "✓";
-  font-weight: bold;
-  color: #4ade80;
-  font-size: 24px;
-}
 
 .cta-buttons {
   display: flex;
