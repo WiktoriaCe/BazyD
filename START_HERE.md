@@ -57,22 +57,6 @@ System do zarządzania badaniami medycznymi z:
 
 ---
 
-##  Autentykacja API
-
-### Uzyskaj token
-```bash
-curl -X POST http://localhost:8000/api/auth/token/ \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin123"}'
-```
-
-### Użyj w requestach
-```bash
-curl -H "Authorization: Token YOUR_TOKEN" \
-  http://localhost:8000/api/experiments/
-```
-
----
 
 ##  Struktura projektu
 
@@ -90,7 +74,6 @@ medical-research-db/
 
 ---
 
-## 🧪 Testy API
 
 ### Lista eksperymentów
 ```bash
@@ -118,7 +101,7 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 
 ---
 
-## 🎓 Modele danych
+##  Modele danych
 
 1. **CellLine** - Linie komórkowe (in vitro)
 2. **AnimalModel** - Modele zwierzęce (in vivo)
@@ -132,7 +115,7 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 
 ---
 
-## 🚀 Następne kroki
+##  Następne kroki
 
 ### Dla lokalnej pracy
 1. Czytaj API_DOCUMENTATION.md
@@ -151,7 +134,7 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 
 ---
 
-## ⚙️ Polecane komendy
+##  Polecane komendy
 
 ```bash
 # Django Admin
@@ -173,23 +156,6 @@ python manage.py collectstatic
 
 ---
 
-## 🆘 Potrzebujesz pomocy?
-
-- **API Reference**: API_DOCUMENTATION.md
-- **Architecture**: TECHNICAL_DOCUMENTATION.md
-- **Overview**: PROJECT_SUMMARY.md
-- **GitHub**: GITHUB_SETUP.md
-
----
-
-## 💡 Szybkie tipy
-
-- Admin panel jest bardzo przydatny do zarządzania danymi
-- API supports filtering, searching, and sorting
-- Sample data już załadowana - możesz testować od razu
-- Token auth wymagany dla API (nie dla Admin)
-
----
 
 ## ✨ Wbudowane dane
 
@@ -200,7 +166,5 @@ python manage.py collectstatic
 
 ---
 
-**Powodzenia w pracy! 🚀**
 
-*Pytania? Sprawdź dokumentację.*
 
