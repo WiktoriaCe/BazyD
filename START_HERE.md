@@ -4,7 +4,7 @@
 
 Właśnie pobrałeś/pobrałaś kompleksowy system zarządzania badaniami medycznymi w Django.
 
-## ⚡ Szybki Start (5 minut)
+## Instalacja
 
 ### 1️⃣ Zainstaluj zależności
 ```bash
@@ -36,7 +36,7 @@ python manage.py runserver
 
 | Plik | Zawartość |
 |------|-----------|
-| **README.md** | Szybki przegląd funkcji |
+| **README.md** | Przegląd funkcji |
 | **TECHNICAL_DOCUMENTATION.md** | Dokumentacja architekturalna |
 | **PROJECT_SUMMARY.md** | Statystyki i podsumowanie |
 | **GITHUB_SETUP.md** | Jak opublikować na GitHub |
@@ -138,7 +138,7 @@ python manage.py collectstatic
 
 ---
 
-## 💡 Szybkie tipy
+## 💡 Wskazówki
 
 - Admin panel jest bardzo przydatny do zarządzania danymi
 - Sample data już załadowana - możesz testować od razu

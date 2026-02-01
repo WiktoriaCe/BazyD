@@ -120,7 +120,7 @@ Użyj Gunicorn + Nginx + Postgres
 ## 📝 README.md dla GitHub
 
 Projekt zawiera kompletny README.md z:
-- Quick start instrukcjami
+- instrukcjami instalacji
 - Przykładami użycia
 - Instrukcjami deployment
 

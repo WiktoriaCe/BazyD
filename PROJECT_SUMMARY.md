@@ -31,7 +31,7 @@
 
 ### Documentation
 - ✅ TECHNICAL_DOCUMENTATION.md - Architecture & implementation
-- ✅ README.md - Quick start guide
+- ✅ README.md - Installation guide
 - ✅ Sample data generator - populate_data.py
 
 ### Security & Performance
@@ -51,7 +51,7 @@
 | Admin Classes | 9 |
 | Custom Actions | 4 |
 
-## 🚀 Quick Start Commands
+## Installation Commands
 
 ```bash
 # 1. Install dependencies
@@ -121,7 +121,7 @@ Admin:     http://localhost:8000/admin/       (admin/admin123)
 ├── populate_data.py       ← Sample data generator
 ├── requirements.txt       ← Dependencies
 ├── TECHNICAL_DOCUMENTATION.md ← Architecture docs
-└── README.md             ← Quick start
+└── README.md             ← Installation
 ```
 
 ## 🧬 Domain Model Relationships
@@ -175,7 +175,7 @@ AnimalModel (1) ──────── ExperimentAnimal ───────�
    - Troubleshooting guide
 
 3. **README.md**
-   - Quick start instructions
+   - Installation instructions
    - Installation steps
    - Basic usage examples
 

@@ -21,12 +21,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from hello_world.core import views as core_views
-from research import views as research_views
 
 urlpatterns = [
     path("", core_views.index),
     path("admin/", admin.site.urls),
-    path("docs/<int:pk>/", research_views.documentation_detail, name="documentation_detail"),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 if settings.DEBUG:

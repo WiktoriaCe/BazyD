@@ -5,14 +5,5 @@ Files previously containing viewsets and serializers were replaced with informat
 Models and Django Admin remain intact.
 """
 
-from django.shortcuts import render, get_object_or_404
-
-# No API viewsets defined in this module.
-
-from .models import Documentation
-
-
-def documentation_detail(request, pk):
-    """Public read-only view to display a single Documentation entry."""
-    doc = get_object_or_404(Documentation, pk=pk)
-    return render(request, "documentation_detail.html", {"doc": doc})
+# The public documentation view was removed as part of the site simplification.
+# Models and Django Admin remain intact for managing Documentation entries.

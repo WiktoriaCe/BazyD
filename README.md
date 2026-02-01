@@ -18,7 +18,7 @@ System zarządzania badaniami medycznymi z obsługą kompleksowych modeli danych
 - **Baza danych**: SQLite (dev) / PostgreSQL (production)
 - **Python**: 3.10+
 
-## 🚀 Szybki start
+## Instalacja
 
 ### 1. Zainstaluj zależności
 ```bash
