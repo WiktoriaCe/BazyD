@@ -19,13 +19,10 @@ research/models.py zawiera 9 głównych modeli:
 9. Documentation - Notatki i dokumentacja
 ```
 
-### Warstwa API (REST)
+### Warstwa API (REST) - REMOVED
 ```
-ViewSets w views.py zapewniają:
-- CRU operacje na wszystkich modelach
-- Filtering, searching, ordering
-- Custom actions (summary, reports)
-- Permission checking
+The REST API layer has been removed from this codebase on branch `remove-api`.
+The sections below that previously described API endpoints are retained for historical reference only.
 ```
 
 ### Relacje bazy danych
