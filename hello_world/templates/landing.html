@@ -32,6 +32,13 @@
                     
                     <div class="cta-buttons">
                         <a href="#data" class="btn btn-primary">Zobacz dane</a>
+                        {% if request.user.is_authenticated %}
+                        <div style="display:inline-block; margin-left:12px;">
+                          <a href="/add/cell-line/" class="btn">Dodaj linię</a>
+                          <a href="/add/animal-model/" class="btn">Dodaj model zwierzęcy</a>
+                          <a href="/add/experiment/" class="btn">Dodaj eksperyment</a>
+                        </div>
+                        {% endif %}
                     </div> 
                 </div>
                 <div class="hero-image">🔬</div>

@@ -26,6 +26,7 @@ urlpatterns = [
     path("", core_views.index),
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("add/", include("research.urls")),
 ]
 
 if settings.DEBUG:

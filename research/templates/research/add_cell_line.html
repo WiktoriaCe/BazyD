@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dodaj Linię Komórkową</title>
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+  <div class="container" style="padding:40px 20px;">
+    <h1>Dodaj Linię Komórkową</h1>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Dodaj</button>
+      <a href="/" class="btn">Anuluj</a>
+    </form>
+  </div>
+</body>
+</html>
