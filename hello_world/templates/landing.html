@@ -81,26 +81,128 @@
             <section class="search-section" aria-label="Search">
                 <div class="container">
                     <form method="get" action="">
-                        <label for="q">Szukaj linii komórkowej:</label>
-                        <input type="search" id="q" name="q" placeholder="np. HeLa" value="{{ q|default:'' }}">
+                        <label for="q">Szukaj:</label>
+                        <input type="search" id="q" name="q" placeholder="np. HeLa lub nazwa użytkownika" value="{{ q|default:'' }}">
                         <button type="submit" class="btn">Szukaj</button>
                         {% if q %}
-                        <a href="#data" class="btn btn-secondary">Wyczyść</a>
+                        <a href="/" class="btn btn-secondary">Wyczyść</a>
                         {% endif %}
                     </form>
                     {% if q %}
-                    <p>Wyniki dla: <strong>{{ q }}</strong> — <strong>{{ cell_lines.count }} znaleziono</strong></p>
-                    {% if q and cell_lines %}
-                    <p>Znalezione:</p>
-                    <ul class="search-results">
-                        {% for cl in cell_lines %}
-                        <li>{{ cl.name|highlight:q }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                    <p>Wyszukano: <strong>{{ q }}</strong> — dopasowane fragmenty zostały <strong>podświetlone</strong>.</p>
                     {% endif %}
                 </div>
             </section>
+
+            <!-- Users Table -->
+            <div class="table-container">
+                <h3>👥 Użytkownicy</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nazwa użytkownika</th>
+                            <th>Imię</th>
+                            <th>Nazwisko</th>
+                            <th>Email</th>
+                            <th>Data dołączenia</th>
+                            <th>Aktywny</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username|highlight:q }}</td>
+                            <td>{{ user.first_name|highlight:q }}</td>
+                            <td>{{ user.last_name|highlight:q }}</td>
+                            <td>{{ user.email|highlight:q }}</td>
+                            <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
+                            <td>{% if user.is_active %}Tak{% else %}Nie{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cell Lines Table -->
+            <div class="table-container">
+                <h3>🧫 Linie Komórkowe</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Typ</th>
+                            <th>Pochodzenie</th>
+                            <th>Tkanka</th>
+                            <th>Przejścia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cell_line in cell_lines %}
+                        <tr>
+                            <td>{{ cell_line.name|highlight:q }}</td>
+                            <td>{{ cell_line.get_cell_type_display|highlight:q }}</td>
+                            <td>{{ cell_line.origin|highlight:q }}</td>
+                            <td>{{ cell_line.tissue_type|highlight:q }}</td>
+                            <td>{{ cell_line.passage_number }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Animal Models Table -->
+            <div class="table-container">
+                <h3>🐭 Modele Zwierzęce</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Gatunek</th>
+                            <th>Linia</th>
+                            <th>Wiek (tygodnie)</th>
+                            <th>Płeć</th>
+                            <th>Waga (g)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for animal in animal_models %}
+                        <tr>
+                            <td>{{ animal.name|highlight:q }}</td>
+                            <td>{{ animal.get_species_display|highlight:q }}</td>
+                            <td>{{ animal.strain|highlight:q }}</td>
+                            <td>{{ animal.age_weeks }}</td>
+                            <td>{{ animal.get_sex_display }}</td>
+                            <td>{{ animal.weight_grams|default:"-" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Experiments Table -->
+            <div class="table-container">
+                <h3>📋 Eksperymenty</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tytuł</th>
+                            <th>Typ</th>
+                            <th>Status</th>
+                            <th>Data utworzenia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for experiment in experiments %}
+                        <tr>
+                            <td>{{ experiment.title|highlight:q }}</td>
+                            <td>{{ experiment.protocol.get_experiment_type_display|highlight:q }}</td>
+                            <td>{{ experiment.get_status_display }}</td>
+                            <td>{{ experiment.created_date|date:"d.m.Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Users Table -->
             <div class="table-container">

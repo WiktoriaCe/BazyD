@@ -3,12 +3,11 @@ from research.models import CellLine, AnimalModel, Experiment
 from django.contrib.auth.models import User
 
 def index(request):
-    # Pobierz wszystkie dane z modeli (z obsługą wyszukiwania linii komórkowej)
+    # Pobierz wszystkie dane z modeli. Szukany tekst będzie podświetlany w szablonie.
     q = request.GET.get('q', '').strip()
-    if q:
-        cell_lines = CellLine.objects.filter(name__icontains=q)
-    else:
-        cell_lines = CellLine.objects.all()
+
+    # Zwracamy wszystkie wpisy; filtrowanie nie będzie usuwać pozostałych elementów
+    cell_lines = CellLine.objects.all()
 
     animal_models = AnimalModel.objects.all()
     experiments = Experiment.objects.all()
