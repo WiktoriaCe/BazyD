@@ -187,90 +187,12 @@
         </div>
     </section>
 
-    <!-- Documentation Section -->
-    <section class="docs-section" id="docs">
-        <div class="container">
-            <h2>Dokumentacja i Zasoby</h2>
-            
-            <div class="endpoints-grid">
-                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/START_HERE.md" target="_blank" rel="noopener noreferrer">
-                    <h3>📖 START_HERE.md</h3>
-                    <p>Szybki start dla nowych użytkowników - 5 minut do uruchomienia</p>
-                </a>
-
-
-                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/TECHNICAL_DOCUMENTATION.md" target="_blank" rel="noopener noreferrer">
-                    <h3>⚙️ TECHNICAL_DOCUMENTATION.md</h3>
-                    <p>Dokumentacja architekturalna, bazy danych i deployment</p>
-                </a>
-
-                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/PROJECT_SUMMARY.md" target="_blank" rel="noopener noreferrer">
-                    <h3>📊 PROJECT_SUMMARY.md</h3>
-                    <p>Statystyki projektu i podsumowanie funkcjonalności</p>
-                </a>
-
-                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/GITHUB_SETUP.md" target="_blank" rel="noopener noreferrer">
-                    <h3>🔐 GITHUB_SETUP.md</h3>
-                    <p>Instrukcje publikacji projektu na GitHub</p>
-                </a>
-
-                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/README.md" target="_blank" rel="noopener noreferrer">
-                    <h3>📝 README.md</h3>
-                    <p>Przegląd projektu i główne instrukcje</p>
-                </a>
-            </div>
-
-            <div style="margin-top: 30px;">
-                <h3>📝 Dokumenty z bazy</h3>
-                {% if docs.count %}
-                <ul>
-                    {% for doc in docs %}
-                    <li><a href="{% url 'documentation_detail' doc.id %}">{{ doc.title }}</a> — {{ doc.get_document_type_display }}</li>
-                    {% endfor %}
-                </ul>
-                {% else %}
-                <p>Brak dokumentów w bazie.</p>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick Access Section -->
-    <section class="docs-section">
-        <div class="container">
-            <h2>Szybki Dostęp</h2>
-            
-            <div class="endpoints-grid">
-                <div class="endpoint-card">
-                    <h3>🔑 Admin Panel</h3>
-                    <p><strong>URL:</strong> http://localhost:8000/admin/</p>
-                    <p><strong>Username:</strong> admin</p>
-                    <p><strong>Password:</strong> admin123</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
 
 
 
-    <!-- Getting Started Section -->
-    <section class="docs-section">
-        <div class="container">
-            <h2>Szybki Start (5 minut)</h2>
-            
-            <div style="background: #f9fafb; padding: 40px; border-radius: 12px;">
-                <ol style="font-size: 18px; line-height: 2; color: #333;">
-                    <li><strong>Zainstaluj zależności:</strong> <code style="background: #e5e7eb; padding: 5px 10px; border-radius: 4px;">pip install -r requirements.txt</code></li>
-                    <li><strong>Migruj bazę:</strong> <code style="background: #e5e7eb; padding: 5px 10px; border-radius: 4px;">python manage.py migrate</code></li>
-                    <li><strong>Załaduj dane:</strong> <code style="background: #e5e7eb; padding: 5px 10px; border-radius: 4px;">python populate_data.py</code></li>
-                    <li><strong>Uruchom serwer:</strong> <code style="background: #e5e7eb; padding: 5px 10px; border-radius: 4px;">python manage.py runserver</code></li>
-                    <li><strong>Otwórz przeglądarkę:</strong> <a href="http://localhost:8000/admin/" style="color: #667eea; text-decoration: none;">http://localhost:8000/admin/</a></li>
-                </ol>
-            </div>
-        </div>
-    </section>
+
 
     <footer>
         <div class="container">
