@@ -37,10 +37,17 @@ python manage.py migrate
 python populate_data.py
 ```
 
-### 4. Uruchom serwer
+### 4. Dodaj superuser'a
+```bash
+python manage.py createsuperuser
+```
+
+### 5. Uruchom serwer
 ```bash
 python manage.py runserver
 ```
+
+
 
 **Dostęp:**
 - Admin: http://localhost:8000/admin/ (admin/admin123)
