@@ -6,7 +6,7 @@
 
 1. Wejdź na https://github.com/new
 2. Nazwa: `medical-research-db`
-3. Opis: `Django system for in vitro/in vivo research documentation with REST API`
+3. Opis: `Django system for in vitro/in vivo research documentation`
 4. Ustaw typ: Public (lub Private)
 5. **NIE** inicjalizuj z README (już mamy)
 6. Kliknij "Create repository"
@@ -121,14 +121,12 @@ Użyj Gunicorn + Nginx + Postgres
 
 Projekt zawiera kompletny README.md z:
 - Quick start instrukcjami
-- API dokumentacją
 - Przykładami użycia
 - Instrukcjami deployment
 
 ## 🏷️ Sugerowane tagi/labels na GitHub
 
 - `django` - Frameworka
-- `rest-api` - API
 - `medical-research` - Domena
 - `database` - Typ projektu
 - `n-m-relationships` - Funkcjonalność
@@ -137,7 +135,6 @@ Projekt zawiera kompletny README.md z:
 ## 📊 Sugerowane tematy (Topics)
 
 - django
-- rest-api
 - medical-research
 - python
 - database
@@ -148,7 +145,6 @@ Projekt jest gotowy dla automatycznych testów i deploymentu.
 
 ## 📞 Support Links do Include
 
-- Documentation: `/API_DOCUMENTATION.md`
 - Technical: `/TECHNICAL_DOCUMENTATION.md`
 - Project Summary: `/PROJECT_SUMMARY.md`
 
@@ -157,7 +153,7 @@ Projekt jest gotowy dla automatycznych testów i deploymentu.
 Projekt ma czystą historię commitów:
 
 1. **Initial commit**: Podstawowe setup
-2. **Medical research database**: Główne modele, API, admin
+2. **Medical research database**: Główne modele i admin
 3. **Technical documentation**: Dokumentacja architekturalneaj
 4. **Project summary**: Podsumowanie i statystyki
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Research Database - Django REST API</title>
+    <title>Medical Research Database</title>
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
 <body>
@@ -15,7 +15,6 @@
             </a>
             <nav>
                 <a href="/admin/">Admin Panel</a>
-                <a href="/api/">API</a>
                 <a href="#docs">Dokumentacja</a>
             </nav>
         </div>
@@ -27,20 +26,17 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>System Dokumentacji Badań Medycznych</h1>
-                    <p>Kompleksowa platforma do zarządzania badaniami in vitro i in vivo z REST API, zaawansowanymi raportami i pełną dokumentacją.</p>
+                    <p>Kompleksowa platforma do zarządzania badaniami in vitro i in vivo z zaawansowanymi raportami i pełną dokumentacją.</p>
                     
                     <ul class="features-list">
                         <li>9 zaawansowanych modeli danych</li>
-                        <li>90+ REST API endpoints</li>
                         <li>Relacje N-M (linie komórkowe, modele zwierzęce)</li>
-                        <li>Token-based authentication</li>
                         <li>Zaawansowane filtrowanie i wyszukiwanie</li>
                         <li>Generowanie raportów</li>
                     </ul>
 
                     <div class="cta-buttons">
                         <a href="/admin/" class="btn btn-primary">Przejdź do Admin</a>
-                        <a href="/api/" class="btn btn-secondary">Explore API</a>
                     </div>
                 </div>
                 <div class="hero-image">🔬</div>
@@ -48,68 +44,7 @@
         </section>
     </main>
 
-    <!-- API Section -->
-    <section class="api-section">
-        <div class="container">
-            <h2>API Endpoints</h2>
-            
-            <div class="endpoints-grid">
-                <div class="endpoint-card">
-                    <h3>🧫 Cell Lines</h3>
-                    <p>Zarządzaj liniami komórkowymi</p>
-                    <div class="endpoint-code">
-GET /api/cell-lines/
-POST /api/cell-lines/
-                    </div>
-                </div>
 
-                <div class="endpoint-card">
-                    <h3>🐭 Animal Models</h3>
-                    <p>Modele zwierzęce (myszy, szczury)</p>
-                    <div class="endpoint-code">
-GET /api/animal-models/
-POST /api/animal-models/
-                    </div>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>📋 Experiments</h3>
-                    <p>Komplentne eksperymenty z danymi</p>
-                    <div class="endpoint-code">
-GET /api/experiments/
-POST /api/experiments/
-                    </div>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>📊 Results</h3>
-                    <p>Wyniki pomiarów i analiz</p>
-                    <div class="endpoint-code">
-GET /api/results/
-POST /api/results/
-                    </div>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>🧬 Gene Expression</h3>
-                    <p>Ekspresja genów (qPCR, RNA-Seq)</p>
-                    <div class="endpoint-code">
-GET /api/gene-expressions/
-POST /api/gene-expressions/
-                    </div>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>📄 Documentation</h3>
-                    <p>Notatki i załączniki</p>
-                    <div class="endpoint-code">
-GET /api/documentation/
-POST /api/documentation/
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Stats Section -->
     <section class="stats-section">
@@ -120,8 +55,8 @@ POST /api/documentation/
                     <p>Modeli Danych</p>
                 </div>
                 <div class="stat-item">
-                    <h3>90+</h3>
-                    <p>API Endpoints</p>
+                    <h3>10+</h3>
+                    <p>Funkcje i raporty</p>
                 </div>
                 <div class="stat-item">
                     <h3>11</h3>
@@ -135,47 +70,173 @@ POST /api/documentation/
         </div>
     </section>
 
+    <!-- Data Tables Section -->
+    <section class="data-section">
+        <div class="container">
+            <h2>Wszystkie Dane z Bazy</h2>
+            
+            <!-- Users Table -->
+            <div class="table-container">
+                <h3>👥 Użytkownicy</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nazwa użytkownika</th>
+                            <th>Imię</th>
+                            <th>Nazwisko</th>
+                            <th>Email</th>
+                            <th>Data dołączenia</th>
+                            <th>Aktywny</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
+                            <td>{% if user.is_active %}Tak{% else %}Nie{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cell Lines Table -->
+            <div class="table-container">
+                <h3>🧫 Linie Komórkowe</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Typ</th>
+                            <th>Pochodzenie</th>
+                            <th>Tkanka</th>
+                            <th>Przejścia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cell_line in cell_lines %}
+                        <tr>
+                            <td>{{ cell_line.name }}</td>
+                            <td>{{ cell_line.get_cell_type_display }}</td>
+                            <td>{{ cell_line.origin }}</td>
+                            <td>{{ cell_line.tissue_type }}</td>
+                            <td>{{ cell_line.passage_number }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Animal Models Table -->
+            <div class="table-container">
+                <h3>🐭 Modele Zwierzęce</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Gatunek</th>
+                            <th>Linia</th>
+                            <th>Wiek (tygodnie)</th>
+                            <th>Płeć</th>
+                            <th>Waga (g)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for animal in animal_models %}
+                        <tr>
+                            <td>{{ animal.name }}</td>
+                            <td>{{ animal.get_species_display }}</td>
+                            <td>{{ animal.strain }}</td>
+                            <td>{{ animal.age_weeks }}</td>
+                            <td>{{ animal.get_sex_display }}</td>
+                            <td>{{ animal.weight_grams|default:"-" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Experiments Table -->
+            <div class="table-container">
+                <h3>📋 Eksperymenty</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tytuł</th>
+                            <th>Typ</th>
+                            <th>Status</th>
+                            <th>Data utworzenia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for experiment in experiments %}
+                        <tr>
+                            <td>{{ experiment.title }}</td>
+                            <td>{{ experiment.protocol.get_experiment_type_display }}</td>
+                            <td>{{ experiment.get_status_display }}</td>
+                            <td>{{ experiment.created_date|date:"d.m.Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
     <!-- Documentation Section -->
-    <section class="api-section" id="docs">
+    <section class="docs-section" id="docs">
         <div class="container">
             <h2>Dokumentacja i Zasoby</h2>
             
             <div class="endpoints-grid">
-                <div class="endpoint-card">
+                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/START_HERE.md" target="_blank" rel="noopener noreferrer">
                     <h3>📖 START_HERE.md</h3>
                     <p>Szybki start dla nowych użytkowników - 5 minut do uruchomienia</p>
-                </div>
+                </a>
 
-                <div class="endpoint-card">
-                    <h3>📚 API_DOCUMENTATION.md</h3>
-                    <p>Pełna dokumentacja API z przykładami i curl commandami</p>
-                </div>
 
-                <div class="endpoint-card">
+                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/TECHNICAL_DOCUMENTATION.md" target="_blank" rel="noopener noreferrer">
                     <h3>⚙️ TECHNICAL_DOCUMENTATION.md</h3>
-                    <p>Dokumentacja architekturalneaj, bazy danych i deployment</p>
-                </div>
+                    <p>Dokumentacja architekturalna, bazy danych i deployment</p>
+                </a>
 
-                <div class="endpoint-card">
+                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/PROJECT_SUMMARY.md" target="_blank" rel="noopener noreferrer">
                     <h3>📊 PROJECT_SUMMARY.md</h3>
                     <p>Statystyki projektu i podsumowanie funkcjonalności</p>
-                </div>
+                </a>
 
-                <div class="endpoint-card">
+                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/GITHUB_SETUP.md" target="_blank" rel="noopener noreferrer">
                     <h3>🔐 GITHUB_SETUP.md</h3>
                     <p>Instrukcje publikacji projektu na GitHub</p>
-                </div>
+                </a>
 
-                <div class="endpoint-card">
+                <a class="endpoint-card" href="https://github.com/juliaburnos/research-invitro-invivo/blob/codespace-stunning-carnival-wrxw955q5pgvcg5v/README.md" target="_blank" rel="noopener noreferrer">
                     <h3>📝 README.md</h3>
                     <p>Przegląd projektu i główne instrukcje</p>
-                </div>
+                </a>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3>📝 Dokumenty z bazy</h3>
+                {% if docs.count %}
+                <ul>
+                    {% for doc in docs %}
+                    <li><a href="{% url 'documentation_detail' doc.id %}">{{ doc.title }}</a> — {{ doc.get_document_type_display }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>Brak dokumentów w bazie.</p>
+                {% endif %}
             </div>
         </div>
     </section>
 
     <!-- Quick Access Section -->
-    <section class="api-section">
+    <section class="docs-section">
         <div class="container">
             <h2>Szybki Dostęp</h2>
             
@@ -186,125 +247,16 @@ POST /api/documentation/
                     <p><strong>Username:</strong> admin</p>
                     <p><strong>Password:</strong> admin123</p>
                 </div>
-
-                <div class="endpoint-card">
-                    <h3>🌐 API Root</h3>
-                    <p><strong>URL:</strong> http://localhost:8000/api/</p>
-                    <p><strong>Authentication:</strong> Token-based</p>
-                    <p><strong>Format:</strong> JSON</p>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>🔐 Get Token</h3>
-                    <p><strong>Endpoint:</strong> POST /api/auth/token/</p>
-                    <p><strong>Body:</strong> username + password</p>
-                    <p><strong>Header:</strong> Authorization: Token &lt;token&gt;</p>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Example Code Section -->
-    <section class="api-section">
-        <div class="container">
-            <h2>Przykłady Użycia API</h2>
-            
-            <div class="endpoints-grid">
-                <div class="endpoint-card">
-                    <h3>🔓 Uzyskaj Token</h3>
-                    <div class="endpoint-code">
-curl -X POST http://localhost:8000/api/auth/token/ \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin123"}'
-                    </div>
-                </div>
 
-                <div class="endpoint-card">
-                    <h3>📋 Lista Eksperymentów</h3>
-                    <div class="endpoint-code">
-curl -H "Authorization: Token YOUR_TOKEN" \
-  http://localhost:8000/api/experiments/
-                    </div>
-                </div>
 
-                <div class="endpoint-card">
-                    <h3>🔍 Filtruj i Szukaj</h3>
-                    <div class="endpoint-code">
-curl -H "Authorization: Token YOUR_TOKEN" \
-  "http://localhost:8000/api/experiments/?status=ongoing"
-                    </div>
-                </div>
 
-                <div class="endpoint-card">
-                    <h3>📊 Raport Eksperymentu</h3>
-                    <div class="endpoint-code">
-curl -H "Authorization: Token YOUR_TOKEN" \
-  http://localhost:8000/api/experiments/1/summary/
-                    </div>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>🧬 Gene Expression Report</h3>
-                    <div class="endpoint-code">
-curl -H "Authorization: Token YOUR_TOKEN" \
-  http://localhost:8000/api/experiments/1/\
-gene_expression_report/
-                    </div>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>📊 Results Report</h3>
-                    <div class="endpoint-code">
-curl -H "Authorization: Token YOUR_TOKEN" \
-  http://localhost:8000/api/experiments/1/\
-results_report/
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="stats-section">
-        <div class="container">
-            <h2 style="margin-bottom: 40px;">Technologia i Architektura</h2>
-            
-            <div class="endpoints-grid">
-                <div class="endpoint-card">
-                    <h3>🐍 Django 5.2</h3>
-                    <p>Nowoczesny framework Python z DRF</p>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>🔄 REST API</h3>
-                    <p>90+ endpoints z pełnym CRUD</p>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>🗄️ SQLite/PostgreSQL</h3>
-                    <p>Development i production ready</p>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>🔐 Authentication</h3>
-                    <p>Token-based + Django Admin</p>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>📈 Advanced Features</h3>
-                    <p>Filtering, searching, sorting, pagination</p>
-                </div>
-
-                <div class="endpoint-card">
-                    <h3>📋 N-M Relations</h3>
-                    <p>Complex relationships with through models</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Getting Started Section -->
-    <section class="api-section">
+    <section class="docs-section">
         <div class="container">
             <h2>Szybki Start (5 minut)</h2>
             
@@ -322,7 +274,7 @@ results_report/
 
     <footer>
         <div class="container">
-            <p>🧬 <strong>Medical Research Database</strong> - Django REST API System for In Vitro/In Vivo Research Documentation</p>
+            <p>🧬 <strong>Medical Research Database</strong> - System do dokumentacji badań (Django)</p>
             <p style="margin-top: 20px; font-size: 14px; color: #999;">Built with ❤️ • 2026</p>
         </div>
     </footer>

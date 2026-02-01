@@ -3,12 +3,10 @@
 ## ✅ Completed Features
 
 ### Core System
-- ✅ Django 5.2 + Django REST Framework fully configured
+- ✅ Django 5.2 configured
 - ✅ 9 comprehensive data models for medical research
-- ✅ RESTful API with 9 ViewSets (90+ endpoints)
-- ✅ Token-based authentication
-- ✅ Advanced filtering, searching, and sorting
-- ✅ Custom report generation endpoints
+- ✅ Admin-driven management interface with advanced filtering and search
+- ✅ Custom report generation features
 
 ### Data Models (N-M Relations)
 ```
@@ -23,22 +21,6 @@
 ✓ Documentation       - 3 documentation entries
 ```
 
-### API Endpoints (15 resource types)
-```
-✓ /api/cell-lines/              - CRUD + custom actions
-✓ /api/animal-models/           - CRUD + by_species filter
-✓ /api/protocols/               - CRUD + experiments list
-✓ /api/experiments/             - CRUD + 3 report endpoints
-  - .../summary/                - Experiment overview
-  - .../results_report/         - Statistical analysis
-  - .../gene_expression_report/ - Gene data aggregation
-✓ /api/samples/                 - In vitro samples CRUD
-✓ /api/animals/                 - In vivo animals CRUD
-✓ /api/results/                 - Results measurements CRUD
-✓ /api/gene-expressions/        - Gene expression CRUD
-✓ /api/documentation/           - Notes & files CRUD
-✓ /api/auth/token/              - Token authentication
-```
 
 ### Admin Interface
 - ✅ 9 registered models with full CRUD
@@ -48,7 +30,6 @@
 - ✅ File attachment support
 
 ### Documentation
-- ✅ API_DOCUMENTATION.md - Complete API reference
 - ✅ TECHNICAL_DOCUMENTATION.md - Architecture & implementation
 - ✅ README.md - Quick start guide
 - ✅ Sample data generator - populate_data.py
@@ -67,10 +48,7 @@
 | Python Files | 18 |
 | Lines of Code | 1,868 |
 | Data Models | 9 |
-| ViewSets | 9 |
-| Serializers | 11 |
 | Admin Classes | 9 |
-| API Endpoints | 90+ |
 | Custom Actions | 4 |
 
 ## 🚀 Quick Start Commands
@@ -90,10 +68,10 @@ python manage.py runserver
 
 # 5. Access the system
 Admin:     http://localhost:8000/admin/       (admin/admin123)
-API:       http://localhost:8000/api/
 ```
 
 ## 🔑 Key Features Implemented
+
 
 ### 1. Complex N-M Relationships
 - Experiment ↔ CellLine (via ExperimentSample)
@@ -134,15 +112,14 @@ API:       http://localhost:8000/api/
 │
 ├── research/               ← Main app
 │   ├── models.py          ← 9 data models (1,000+ lines)
-│   ├── serializers.py     ← 11 DRF serializers (400+ lines)
-│   ├── views.py           ← 9 ViewSets with custom actions
+│   ├── views.py           ← core views and admin utilities
 │   ├── admin.py           ← Django admin with inlines
-│   ├── urls.py            ← API routing
+│   ├── admin.py           ← Django admin with inlines
+│   ├── urls.py            ← Main URL routing
 │   └── migrations/        ← Database migrations
 │
 ├── populate_data.py       ← Sample data generator
 ├── requirements.txt       ← Dependencies
-├── API_DOCUMENTATION.md   ← API reference
 ├── TECHNICAL_DOCUMENTATION.md ← Architecture docs
 └── README.md             ← Quick start
 ```
@@ -164,12 +141,6 @@ AnimalModel (1) ──────── ExperimentAnimal ───────�
 
 ## 🔐 Authentication & Authorization
 
-- **Type**: Token-based (DRF)
-- **Endpoint**: `POST /api/auth/token/`
-- **Format**: `Authorization: Token <token>`
-- **Default Credentials**:
-  - admin / admin123
-  - researcher / password123
 
 ## 📊 Sample Data Included
 
@@ -191,8 +162,6 @@ AnimalModel (1) ──────── ExperimentAnimal ───────�
 
 ## 📚 Documentation Files
 
-1. **API_DOCUMENTATION.md**
-   - Complete API reference
    - Request/response examples
    - Filtering, searching, sorting
    - Field descriptions
@@ -224,7 +193,7 @@ AnimalModel (1) ──────── ExperimentAnimal ───────�
    - Use Gunicorn/uWSGI
 
 3. **Frontend Integration**
-   - API ready for React/Vue frontend
+   - Admin interface is the primary integration point for now
    - CORS configured for frontend
 
 4. **Additional Features**
@@ -233,43 +202,10 @@ AnimalModel (1) ──────── ExperimentAnimal ───────�
    - Advanced analytics
    - Real-time notifications
 
-## 💡 Usage Examples
-
-### Get Authentication Token
-```bash
-curl -X POST http://localhost:8000/api/auth/token/ \
-  -d "username=admin&password=admin123"
-```
-
-### List All Experiments
-```bash
-curl -H "Authorization: Token YOUR_TOKEN" \
-  http://localhost:8000/api/experiments/
-```
-
-### Create New Cell Line
-```bash
-curl -X POST http://localhost:8000/api/cell-lines/ \
-  -H "Authorization: Token YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "NewLine",
-    "cell_type": "cancer",
-    "origin": "human",
-    "tissue_type": "epithelial"
-  }'
-```
-
-### Generate Experiment Report
-```bash
-curl -H "Authorization: Token YOUR_TOKEN" \
-  http://localhost:8000/api/experiments/1/results_report/
-```
-
 ## ✨ Highlights
 
 - ✅ **Production-Ready Code** - Follows Django best practices
-- ✅ **Well-Documented** - Comprehensive API and technical docs
+- ✅ **Well-Documented** - Technical docs and usage guides
 - ✅ **Scalable Architecture** - Ready for growth
 - ✅ **Data Validation** - Proper constraints and validators
 - ✅ **Test Data Included** - Pre-loaded examples
@@ -278,7 +214,6 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 ## 📞 Support
 
 For issues or questions, refer to:
-- API_DOCUMENTATION.md - API reference
 - TECHNICAL_DOCUMENTATION.md - Architecture details
 - Django docs: https://docs.djangoproject.com/
 - DRF docs: https://www.django-rest-framework.org/
@@ -289,6 +224,6 @@ For issues or questions, refer to:
 
 **Current Branch**: `main`
 
-**Latest Commit**: Medical research database with Django REST API
+**Latest Commit**: Medical research database
 
 **Ready to deploy or extend!** 🚀

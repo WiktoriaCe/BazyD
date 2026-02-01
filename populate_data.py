@@ -30,7 +30,7 @@ def create_sample_data():
         {'username': 'piotr_nowak', 'email': 'piotr.nowak@example.com', 'first_name': 'Piotr', 'last_name': 'Nowak'},
         {'username': 'maria_lewandowska', 'email': 'maria.lewandowska@example.com', 'first_name': 'Maria', 'last_name': 'Lewandowska'},
         {'username': 'jan_szymczak', 'email': 'jan.szymczak@example.com', 'first_name': 'Jan', 'last_name': 'Szymczak'},
-        {'username': 'katarzyna_wilk', 'email': 'katarzyna.wilk@example.com', 'first_name': 'Katarzyna', 'last_name': 'Wilk'}
+        {'username': 'katarzyna_wilk', 'email': 'katarzyna.wilk@example.com', 'first_name': 'Katarzyna', 'last_name': 'Wilk'},
         {'username': 'rafal_michalski', 'email': 'rafal.michalski@example.com', 'first_name': 'Rafał', 'last_name': 'Michalski'},
         {'username': 'beata_walczak', 'email': 'beata.walczak@example.com', 'first_name': 'Beata', 'last_name': 'Walczak'},
         {'username': 'tomasz_sokolowski', 'email': 'tomasz.sokolowski@example.com', 'first_name': 'Tomasz', 'last_name': 'Sokołowski'},
@@ -497,7 +497,7 @@ def create_sample_data():
         docs.append(doc)
     print(f"✓ Dodane {len(docs)} dokumenty")
     
-    print("\n✅ Wszystkie dane zostały stworzone pomyślnie!")
+    print("\n Wszystkie dane zostały stworzone pomyślnie!")
     print(f"\nPrzypomnienie: Zaloguj się na http://localhost:8000/admin/")
     print(f"Użytkownik: researcher | Hasło: password123")
 
