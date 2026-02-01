@@ -18,7 +18,6 @@
 ✓ ExperimentAnimal    - N-M relationship (2 animal groups)
 ✓ Result              - 4 results with statistics
 ✓ GeneExpression      - 12 gene expression records
-✓ Documentation       - 3 documentation entries
 ```
 
 
@@ -131,7 +130,7 @@ CellLine (1) ──────── ExperimentSample ──────── 
                                                       │
                                                       ├─→ Result
                                                       ├─→ GeneExpression
-                                                      └─→ Documentation
+
 
 AnimalModel (1) ──────── ExperimentAnimal ──────── (N) Experiment
                                                       │
@@ -149,7 +148,7 @@ AnimalModel (1) ──────── ExperimentAnimal ───────�
 - **Experiments**: 3 complete experiments with data
 - **Results**: 4 measurement results with statistics
 - **Gene Expression**: 12 measurements across 3 genes
-- **Documentation**: 3 notes and incident reports
+
 
 ## 🚀 Deployment Ready
 

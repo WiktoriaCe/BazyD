@@ -86,11 +86,10 @@ medical-research-db/
 6. **ExperimentAnimal** - Zwierzęta w eksperymentach (N-M)
 7. **Result** - Wyniki pomiarów
 8. **GeneExpression** - Ekspresja genów
-9. **Documentation** - Notatki i dokumenty
 
 ---
 
-## 🚀 Następne kroki
+## 🚀 Następne kroki"
 
 ### Dla lokalnej pracy
 1. Dodaj nowe dane w Django Admin

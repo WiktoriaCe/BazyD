@@ -1,4 +1,4 @@
-# Medical Research Database - In Vitro/In Vivo Documentation System
+# Medical Research Database - In Vitro/In Vivo
 
 System zarządzania badaniami medycznymi z obsługą kompleksowych modeli danych dla badań in vitro (linie komórkowe) i in vivo (modele zwierzęce).
 
@@ -8,9 +8,8 @@ System zarządzania badaniami medycznymi z obsługą kompleksowych modeli danych
 - ✅ **Relacje N-M** - Wsparcie dla skomplikowanych relacji między encjami
 - ✅ **Raporty** - Generowanie raportów wyników i ekspresji genów
 - ✅ **Django Admin** - Intuicyjny interfejs zarządzania danymi
-- ✅ **Dokumentacja** - System notatek i załączników do eksperymentów
 - ✅ **Ekspresja genów** - Obsługa qPCR, RNA-Seq, Microarray, In Situ
-- ✅ **Filtrowanie zaawansowane** - Wyszukiwanie, sortowanie, filtry
+- ✅ **Filtrowanie zaawansowane** - Wyszukiwanie, sortowanie, filtry"
 
 ## 🛠️ Technologia
 
