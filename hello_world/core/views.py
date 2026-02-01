@@ -4,7 +4,12 @@ from django.contrib.auth.models import User
 
 def index(request):
     # Pobierz wszystkie dane z modeli
-    cell_lines = CellLine.objects.all()
+    q = request.GET.get('q', '').strip()
+    if q:
+        cell_lines = CellLine.objects.filter(name__icontains=q)
+    else:
+        cell_lines = CellLine.objects.all()
+
     animal_models = AnimalModel.objects.all()
     experiments = Experiment.objects.all()
     users = User.objects.all()
@@ -15,5 +20,6 @@ def index(request):
         "animal_models": animal_models,
         "experiments": experiments,
         "users": users,
+        "q": q,
     }
-    return render(request, "landing.html", context)
+    return render(request, "landing.html", context) 

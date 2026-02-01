@@ -73,8 +73,22 @@
     <section class="data-section" id="data">
         <div class="container">
             <h2>Wszystkie Dane z Bazy</h2>"
-            
-            <!-- Users Table -->
+                        <section class="search-section" aria-label="Search">
+                <div class="container">
+                    <form method="get" action="">
+                        <label for="q">Szukaj linii komórkowej:</label>
+                        <input type="search" id="q" name="q" placeholder="np. HeLa" value="{{ q|default:'' }}">
+                        <button type="submit" class="btn">Szukaj</button>
+                        {% if q %}
+                        <a href="#data" class="btn btn-secondary">Wyczyść</a>
+                        {% endif %}
+                    </form>
+                    {% if q %}
+                    <p>Wyniki dla: <strong>{{ q }}</strong> — <strong>{{ cell_lines.count }} znaleziono</strong></p>
+                    {% endif %}
+                </div>
+            </section>
+                        <!-- Users Table -->
             <div class="table-container">
                 <h3>👥 Użytkownicy</h3>
                 <table class="data-table">
@@ -117,15 +131,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for cell_line in cell_lines %}
-                        <tr>
-                            <td>{{ cell_line.name }}</td>
-                            <td>{{ cell_line.get_cell_type_display }}</td>
-                            <td>{{ cell_line.origin }}</td>
-                            <td>{{ cell_line.tissue_type }}</td>
-                            <td>{{ cell_line.passage_number }}</td>
-                        </tr>
-                        {% endfor %}
+                        {% if cell_lines %}
+                            {% for cell_line in cell_lines %}
+                            <tr>
+                                <td>{{ cell_line.name }}</td>
+                                <td>{{ cell_line.get_cell_type_display }}</td>
+                                <td>{{ cell_line.origin }}</td>
+                                <td>{{ cell_line.tissue_type }}</td>
+                                <td>{{ cell_line.passage_number }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Brak wyników dla zapytania.</td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
