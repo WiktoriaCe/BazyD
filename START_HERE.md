@@ -4,7 +4,7 @@
 
 Właśnie pobrałeś/pobrałaś kompleksowy system zarządzania badaniami medycznymi w Django.
 
-## Instalacja
+## ⚡ Szybki Start (5 minut)
 
 ### 1️⃣ Zainstaluj zależności
 ```bash
@@ -29,6 +29,8 @@ python manage.py runserver
 ### 5️⃣ Otwórz w przeglądarce
 - **Admin**: http://localhost:8000/admin/
   - Login: `admin` / `admin123`
+- **API**: http://localhost:8000/api/
+  - Wymaga autentykacji (token)
 
 ---
 
@@ -36,8 +38,9 @@ python manage.py runserver
 
 | Plik | Zawartość |
 |------|-----------|
-| **README.md** | Przegląd funkcji |
-| **TECHNICAL_DOCUMENTATION.md** | Dokumentacja architekturalna |
+| **README.md** | Szybki przegląd funkcji |
+| **API_DOCUMENTATION.md** | Pełna dokumentacja API z przykładami |
+| **TECHNICAL_DOCUMENTATION.md** | Dokumentacja architekturalneaj |
 | **PROJECT_SUMMARY.md** | Statystyki i podsumowanie |
 | **GITHUB_SETUP.md** | Jak opublikować na GitHub |
 
@@ -49,12 +52,27 @@ python manage.py runserver
 
 System do zarządzania badaniami medycznymi z:
 - ✅ **9 modeli danych** (linie komórkowe, modele zwierzęce, eksperymenty, itp.)
+- ✅ **RESTful API** (90+ endpoints)
 - ✅ **Django Admin** (interfejs webowy)
 - ✅ **Raporty** (podsumowania, statystyki)
 - ✅ **Autoryzacja** (token-based)
 
 ---
 
+## 🔐 Autentykacja API
+
+### Uzyskaj token
+```bash
+curl -X POST http://localhost:8000/api/auth/token/ \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"admin123"}'
+```
+
+### Użyj w requestach
+```bash
+curl -H "Authorization: Token YOUR_TOKEN" \
+  http://localhost:8000/api/experiments/
+```
 
 ---
 
@@ -64,8 +82,8 @@ System do zarządzania badaniami medycznymi z:
 medical-research-db/
 ├── research/              # Główna aplikacja
 │   ├── models.py         # 9 modeli danych
-│   ├── views.py          # Site views and admin helpers
-│   └── admin.py          # Django Admin
+│   ├── views.py          # API endpoints
+│   ├── serializers.py    # Serializery
 │   └── admin.py          # Django Admin
 ├── hello_world/          # Konfiguracja Django
 ├── populate_data.py      # Generator danych
@@ -73,6 +91,32 @@ medical-research-db/
 ```
 
 ---
+
+## 🧪 Testy API
+
+### Lista eksperymentów
+```bash
+curl -H "Authorization: Token YOUR_TOKEN" \
+  http://localhost:8000/api/experiments/
+```
+
+### Filtrowanie
+```bash
+curl -H "Authorization: Token YOUR_TOKEN" \
+  "http://localhost:8000/api/experiments/?status=ongoing"
+```
+
+### Wyszukiwanie
+```bash
+curl -H "Authorization: Token YOUR_TOKEN" \
+  "http://localhost:8000/api/cell-lines/?search=HeLa"
+```
+
+### Raport eksperymentu
+```bash
+curl -H "Authorization: Token YOUR_TOKEN" \
+  http://localhost:8000/api/experiments/1/summary/
+```
 
 ---
 
@@ -86,14 +130,16 @@ medical-research-db/
 6. **ExperimentAnimal** - Zwierzęta w eksperymentach (N-M)
 7. **Result** - Wyniki pomiarów
 8. **GeneExpression** - Ekspresja genów
+9. **Documentation** - Notatki i dokumenty
 
 ---
 
-## 🚀 Następne kroki"
+## 🚀 Następne kroki
 
 ### Dla lokalnej pracy
-1. Dodaj nowe dane w Django Admin
-2. Skontaktuj się, jeśli chcesz wprowadzić nowe integracje
+1. Czytaj API_DOCUMENTATION.md
+2. Eksploruj API w http://localhost:8000/api/
+3. Dodaj nowe dane w Django Admin
 
 ### Dla GitHub
 1. Czytaj GITHUB_SETUP.md
@@ -131,16 +177,19 @@ python manage.py collectstatic
 
 ## 🆘 Potrzebujesz pomocy?
 
+- **API Reference**: API_DOCUMENTATION.md
 - **Architecture**: TECHNICAL_DOCUMENTATION.md
 - **Overview**: PROJECT_SUMMARY.md
 - **GitHub**: GITHUB_SETUP.md
 
 ---
 
-## 💡 Wskazówki
+## 💡 Szybkie tipy
 
 - Admin panel jest bardzo przydatny do zarządzania danymi
+- API supports filtering, searching, and sorting
 - Sample data już załadowana - możesz testować od razu
+- Token auth wymagany dla API (nie dla Admin)
 
 ---
 

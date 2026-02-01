@@ -3,7 +3,7 @@ from research.models import CellLine, AnimalModel, Experiment
 from django.contrib.auth.models import User
 
 def index(request):
-    # Pobierz wszystkie dane z modeli
+    # Pobierz wszystkie dane z modeli (z obsługą wyszukiwania linii komórkowej)
     q = request.GET.get('q', '').strip()
     if q:
         cell_lines = CellLine.objects.filter(name__icontains=q)
@@ -22,4 +22,4 @@ def index(request):
         "users": users,
         "q": q,
     }
-    return render(request, "landing.html", context) 
+    return render(request, "landing.html", context)

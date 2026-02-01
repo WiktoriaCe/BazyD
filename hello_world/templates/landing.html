@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Research Database</title>
+    <title>Medical Research Database - Django REST API</title>
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
 <body>
@@ -30,19 +30,21 @@
                     
                     <ul class="features-list">
                         <li>9 zaawansowanych modeli danych</li>
+                        <li>90+ REST API endpoints</li>
                         <li>Relacje N-M (linie komórkowe, modele zwierzęce)</li>
+                        <li>Token-based authentication</li>
                         <li>Zaawansowane filtrowanie i wyszukiwanie</li>
                         <li>Generowanie raportów</li>
                     </ul>
 
                     <div class="cta-buttons">
                         <a href="#data" class="btn btn-primary">Zobacz dane</a>
-                    </div>
+                    </div> 
                 </div>
                 <div class="hero-image">🔬</div>
             </div>
         </section>
-    </main>"
+    </main>
 
 
 
@@ -73,8 +75,9 @@
     <!-- Data Tables Section -->
     <section class="data-section" id="data">
         <div class="container">
-            <h2>Wszystkie Dane z Bazy</h2>"
-                        <section class="search-section" aria-label="Search">
+            <h2>Wszystkie Dane z Bazy</h2>
+            
+            <section class="search-section" aria-label="Search">
                 <div class="container">
                     <form method="get" action="">
                         <label for="q">Szukaj linii komórkowej:</label>
@@ -97,7 +100,8 @@
                     {% endif %}
                 </div>
             </section>
-                        <!-- Users Table -->
+
+            <!-- Users Table -->
             <div class="table-container">
                 <h3>👥 Użytkownicy</h3>
                 <table class="data-table">
@@ -140,21 +144,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% if cell_lines %}
-                            {% for cell_line in cell_lines %}
-                            <tr>
-                                <td>{{ cell_line.name|highlight:q }}</td>
-                                <td>{{ cell_line.get_cell_type_display }}</td>
-                                <td>{{ cell_line.origin }}</td>
-                                <td>{{ cell_line.tissue_type }}</td>
-                                <td>{{ cell_line.passage_number }}</td>
-                            </tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="5">Brak wyników dla zapytania.</td>
-                            </tr>
-                        {% endif %}
+                        {% for cell_line in cell_lines %}
+                        <tr>
+                            <td>{{ cell_line.name|highlight:q }}</td>
+                            <td>{{ cell_line.get_cell_type_display }}</td>
+                            <td>{{ cell_line.origin }}</td>
+                            <td>{{ cell_line.tissue_type }}</td>
+                            <td>{{ cell_line.passage_number }}</td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -217,17 +215,12 @@
 
 
 
-
-
-
-
-
     <footer>
         <div class="container">
-            <p>🧬 <strong>Medical Research Database</strong> - System zarządzania badaniami (Django)</p>
+            <p>🧬 <strong>Medical Research Database</strong> - Django REST API System for In Vitro/In Vivo Research Documentation</p>
             <p style="margin-top: 20px; font-size: 14px; color: #999;">Built with ❤️ • 2026</p>
         </div>
-    </footer>"
+    </footer>
 
     {% if request.user.is_authenticated %}
     <script>

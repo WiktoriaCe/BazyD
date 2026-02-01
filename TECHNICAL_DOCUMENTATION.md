@@ -1,6 +1,5 @@
 # Dokumentacja techniczna - Medical Research Database
 
-
 ## Architektura systemu
 
 ### Warstwa modeli (ORM)
@@ -16,6 +15,15 @@ research/models.py zawiera 9 głównych modeli:
 7. Result - Wyniki pomiarów
 8. GeneExpression - Dane ekspresji genów
 9. Documentation - Notatki i dokumentacja
+```
+
+### Warstwa API (REST)
+```
+ViewSets w views.py zapewniają:
+- CRU operacje na wszystkich modelach
+- Filtering, searching, ordering
+- Custom actions (summary, reports)
+- Permission checking
 ```
 
 ### Relacje bazy danych
@@ -36,7 +44,83 @@ animal_model.experiments.all()
 ExperimentAnimal.objects.filter(experiment=exp, animal_model=am)
 ```
 
-**Uwaga:** Interakcja z danymi odbywa się poprzez Django Admin oraz dedykowane widoki.
+## Specyfikacja API
+
+### Authentication
+- **Typ**: Token-based (DRF)
+- **Endpoint**: `POST /api/auth/token/`
+- **Użycie**: `Authorization: Token <token>`
+
+### ViewSet Features
+
+#### Filtração
+```python
+filterset_fields = ['field1', 'field2']  # Exact match
+search_fields = ['field1', 'field2']     # Full-text search
+```
+
+#### Sorting
+```python
+ordering_fields = ['field1', '-field2']
+ordering = ['-created_date']  # Default sort
+```
+
+#### Pagination
+```python
+DEFAULT_PAGINATION_CLASS: PageNumberPagination
+PAGE_SIZE: 20 (konfigurowalne w query: ?page_size=50)
+```
+
+### Custom Actions
+
+#### Experiment Summary
+```
+GET /api/experiments/{id}/summary/
+Response:
+{
+  "title": "...",
+  "status": "completed",
+  "samples_count": 4,
+  "animals_count": 10,
+  "results_count": 20,
+  "gene_expressions_count": 50
+}
+```
+
+#### Results Report
+```
+GET /api/experiments/{id}/results_report/
+Response:
+{
+  "experiment": "...",
+  "results": [...],
+  "statistics": {
+    "count": 20,
+    "mean": 75.5,
+    "min": 45.0,
+    "max": 100.0,
+    "sum": 1510.0
+  }
+}
+```
+
+#### Gene Expression Report
+```
+GET /api/experiments/{id}/gene_expression_report/
+Response:
+{
+  "experiment": "...",
+  "genes": {
+    "BRCA1": [
+      {"expression_level": 2.5, "method": "qpcr", "p_value": 0.01},
+      ...
+    ],
+    ...
+  },
+  "total_genes": 5,
+  "measurements_count": 25
+}
+```
 
 ## Walidacja modeli
 
@@ -62,6 +146,33 @@ ExperimentAnimal.objects.filter(experiment=exp, animal_model=am)
 
 ## Przepływy danych
 
+### Tworzenie eksperymentu z próbkami
+```
+1. POST /api/experiments/
+   └─ Response: {id: 1, ...}
+
+2. POST /api/samples/
+   └─ {"experiment": 1, "cell_line": 1, "treatment": "Drug X", ...}
+   └─ Response: {id: 1, ...}
+
+3. POST /api/results/
+   └─ {"experiment": 1, "sample": 1, "parameter_name": "viability", ...}
+
+4. GET /api/experiments/1/summary/
+   └─ Podsumowanie eksperymentu
+```
+
+### Dodawanie ekspresji genów
+```
+1. Próbka bereits exists: ExperimentSample.id = 1
+
+2. POST /api/gene-expressions/
+   └─ {"sample": 1, "gene_name": "BRCA1", "expression_level": 2.5, ...}
+
+3. GET /api/experiments/1/gene_expression_report/
+   └─ Raport z wszystkimi genami
+```
+
 ## Performance considerations
 
 ### Queries optimization
@@ -82,8 +193,9 @@ queryset = Experiment.objects.prefetch_related(
 
 ## Bezpieczeństwo
 
-### Permissions & Access
-- Application uses Django admin and standard Django auth for access control
+### Permissions
+- `IsAuthenticated` - Wymagany dla wszystkich endpoints
+- Tokeny w `rest_framework.authtoken`
 - User tracking - Każdy wpis ma `created_by` lub `author`
 
 ### CORS
@@ -91,7 +203,8 @@ queryset = Experiment.objects.prefetch_related(
 - Konfiguracja w `settings.py`
 
 ### CSRF
-- Standard Django CSRF token is used for web forms
+- StandardDjangoCSRFToken
+- Wyłączony dla API (token auth)
 
 ## Migracje
 
@@ -175,9 +288,11 @@ gunicorn hello_world.wsgi:application \
 
 ### Dodawanie nowego modelu
 1. Zdefiniuj w `models.py`
-2. Zarejestruj w `admin.py`
-3. Stwórz migracje
-4. Dodaj wszelkie potrzebne widoki lub strony w frontendzie
+2. Stwórz serializer w `serializers.py`
+3. Stwórz ViewSet w `views.py`
+4. Zarejestruj w `admin.py`
+5. Dodaj route w `urls.py`
+6. Stwórz migracje
 
 ### Przykład:
 ```python
@@ -210,6 +325,17 @@ python manage.py shell
 >>> Experiment.objects.all()
 ```
 
+### API Testing
+```bash
+# Get token
+TOKEN=$(curl -s -X POST http://localhost:8000/api/auth/token/ \
+  -d username=admin \
+  -d password=admin123 | grep -o '"token":"[^"]*' | cut -d'"' -f4)
+
+# Test endpoint
+curl -H "Authorization: Token $TOKEN" \
+  http://localhost:8000/api/experiments/
+```
 
 ### Logs
 ```bash
@@ -240,4 +366,4 @@ tail -f /var/log/gunicorn.log
 
 ---
 
-**Pytania?** Sprawdź [README.md](README.md) lub [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)
+**Pytania?** Sprawdź [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
