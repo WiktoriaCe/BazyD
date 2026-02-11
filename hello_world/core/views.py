@@ -10,7 +10,8 @@ def index(request):
     cell_lines = CellLine.objects.all()
 
     animal_models = AnimalModel.objects.all()
-    experiments = Experiment.objects.all()
+    experiments = Experiment.objects.select_related('principal_investigator', 'protocol')
+    experiments = experiments.prefetch_related('experiment_samples__cell_line', 'experiment_animals__animal_model').all()
     users = User.objects.all()
     
     context = {

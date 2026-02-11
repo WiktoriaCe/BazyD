@@ -9,4 +9,7 @@ urlpatterns = [
     path('cell-line/', views.add_cell_line, name='add_cell_line'),
     path('animal-model/', views.add_animal_model, name='add_animal_model'),
     path('experiment/', views.add_experiment, name='add_experiment'),
+    path('experiments/', views.experiment_list, name='experiment_list'),
+    path('experiments/<int:pk>/', views.experiment_detail, name='experiment_detail'),
+    path('user/<int:user_id>/', views.person_detail, name='person_detail'),
 ]

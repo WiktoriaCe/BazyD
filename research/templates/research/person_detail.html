@@ -1,0 +1,311 @@
+{% extends 'landing.html' %}
+
+{% block content %}
+<style>
+  .profile-header {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-left: 5px solid #667eea;
+  }
+
+  .profile-header h1 {
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .profile-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 2px solid #e2e8f0;
+  }
+
+  .profile-info-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-info-label {
+    color: #667eea;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .profile-info-value {
+    color: #2d3748;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .back-link:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  }
+
+  .data-section {
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 8px;
+  }
+
+  .section-container {
+    margin-bottom: 50px;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .section-container h2 {
+    color: #2d3748;
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #667eea;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  .data-table thead {
+    background: linear-gradient(135deg, #0b1220 0%, #111827 100%);
+    box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .data-table th {
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 18px 20px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.02);
+  }
+
+  .data-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
+
+  .data-table td {
+    color: #2d3748;
+    font-size: 15px;
+  }
+
+  .data-table tbody tr:hover {
+    background: #f0f4ff;
+  }
+
+  .data-table tbody tr:nth-child(even) {
+    background: #f9fafb;
+  }
+
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: #a0aec0;
+    font-style: italic;
+    padding: 30px;
+    background: #f9fafb;
+    border-radius: 4px;
+  }
+
+  .detail-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 6px 12px;
+    border: 2px solid #667eea;
+    border-radius: 4px;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .detail-link:hover {
+    background: #667eea;
+    color: white;
+  }
+</style>
+
+<div class="data-section">
+  <div class="profile-header">
+    <h1>👤 {{ person.get_full_name|default:person.username }}</h1>
+
+    <div class="profile-info">
+      <div class="profile-info-item">
+        <span class="profile-info-label">ID Użytkownika</span>
+        <span class="profile-info-value">#{{ person.id }}</span>
+      </div>
+      <div class="profile-info-item">
+        <span class="profile-info-label">Nazwa użytkownika</span>
+        <span class="profile-info-value">{{ person.username }}</span>
+      </div>
+      <div class="profile-info-item">
+        <span class="profile-info-label">Email</span>
+        <span class="profile-info-value">{{ person.email }}</span>
+      </div>
+    </div>
+
+    <a href="/" class="back-link">← Powrót do wszystkich danych</a>
+  </div>
+
+  <div class="section-container">
+    <h2>🧫 Linie komórkowe powiązane z użytkownikiem</h2>
+    {% if cell_lines %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nazwa</th>
+          <th>Typ</th>
+          <th>Pochodzenie</th>
+          <th>Tkanki</th>
+          <th>Przejścia</th>
+          <th>Data utworzenia</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cl in cell_lines %}
+        <tr>
+          <td><strong>#{{ cl.index_number }}</strong></td>
+          <td><strong>{{ cl.name }}</strong></td>
+          <td>{{ cl.get_cell_type_display }}</td>
+          <td>{{ cl.origin }}</td>
+          <td>{{ cl.tissue_type }}</td>
+          <td>{{ cl.passage_number }}</td>
+          <td>{{ cl.created_date|date:"d.m.Y" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">📭 Brak linii komórkowych powiązanych z tym użytkownikiem</div>
+    {% endif %}
+  </div>
+
+  <div class="section-container">
+    <h2>🐭 Modele zwierzęce powiązane z użytkownikiem</h2>
+    {% if animal_models %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nazwa</th>
+          <th>Gatunek</th>
+          <th>Strain</th>
+          <th>Wiek (tygodnie)</th>
+          <th>Płeć</th>
+          <th>Waga (g)</th>
+          <th>Data utworzenia</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for am in animal_models %}
+        <tr>
+          <td><strong>#{{ am.index_number }}</strong></td>
+          <td><strong>{{ am.name }}</strong></td>
+          <td>{{ am.get_species_display }}</td>
+          <td>{{ am.strain }}</td>
+          <td>{{ am.age_weeks }}</td>
+          <td>{{ am.get_sex_display }}</td>
+          <td>{{ am.weight_grams|default:"—" }}</td>
+          <td>{{ am.created_date|date:"d.m.Y" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">📭 Brak modeli zwierzęcych powiązanych z tym użytkownikiem</div>
+    {% endif %}
+  </div>
+
+  <div class="section-container">
+    <h2>📋 Eksperymenty jako główny badacz</h2>
+    {% if experiments %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tytuł</th>
+          <th>Typ</th>
+          <th>Status</th>
+          <th>Data rozpoczęcia</th>
+          <th>Laboratorium</th>
+          <th>Szczegóły</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exp in experiments %}
+        <tr>
+          <td><strong>#{{ exp.index_number }}</strong></td>
+          <td><strong>{{ exp.title }}</strong></td>
+          <td>{% if exp.protocol %}{{ exp.protocol.get_experiment_type_display }}{% else %}—{% endif %}</td>
+          <td>
+            <span style="color: {% if exp.status == 'ongoing' %}#48bb78{% elif exp.status == 'completed' %}#4299e1{% else %}#ed8936{% endif %}; font-weight: 700;">
+              {{ exp.get_status_display }}
+            </span>
+          </td>
+          <td>{{ exp.start_date|date:"d.m.Y" }}</td>
+          <td>{{ exp.lab }}</td>
+          <td><a href="{% url 'experiment_detail' exp.pk %}" class="detail-link">Pokaż</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">📭 Ten użytkownik nie prowadzi żadnych eksperymentów</div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{# Hide default data tables from landing when showing person detail #}
+{% block data_tables %}{% endblock %}

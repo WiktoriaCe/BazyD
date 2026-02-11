@@ -1,0 +1,223 @@
+{% extends 'landing.html' %}
+
+{% block content %}
+<style>
+  .experiment-header {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-left: 5px solid #667eea;
+  }
+  
+  .experiment-header h1 {
+    color: #2d3748;
+    margin-bottom: 25px;
+    font-size: 32px;
+    font-weight: 700;
+  }
+  
+  .experiment-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .experiment-info p {
+    margin: 10px 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .experiment-info strong {
+    color: #667eea;
+    font-weight: 700;
+    display: inline-block;
+    min-width: 140px;
+  }
+
+  .data-section {
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 8px;
+  }
+
+  .table-container {
+    margin-bottom: 50px;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .table-container h3 {
+    color: #2d3748;
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #667eea;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  .data-table thead {
+    background: linear-gradient(135deg, #5f7cdb 0%, #6e5494 100%);
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 16px 18px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .data-table th {
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .data-table td {
+    color: #2d3748;
+    font-size: 15px;
+  }
+
+  .data-table tbody tr:hover {
+    background: #f0f4ff;
+  }
+
+  .data-table tbody tr:nth-child(even) {
+    background: #f9fafb;
+  }
+
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: #a0aec0;
+    font-style: italic;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 4px;
+  }
+</style>
+
+<div class="data-section">
+  <div class="experiment-header">
+    <h1>🔬 {{ experiment.title }}</h1>
+    
+    <div class="experiment-info">
+      <div>
+        <p><strong>Badacz:</strong> {{ experiment.principal_investigator.get_full_name|default:experiment.principal_investigator.username }}</p>
+        <p><strong>Protokół:</strong> {{ experiment.protocol.title }}</p>
+        <p><strong>Status:</strong> <span style="color: {% if experiment.status == 'ongoing' %}#48bb78{% elif experiment.status == 'completed' %}#4299e1{% else %}#ed8936{% endif %}; font-weight: 700;">{{ experiment.get_status_display }}</span></p>
+      </div>
+      <div>
+        <p><strong>Laboratorium:</strong> {{ experiment.lab }}</p>
+        <p><strong>Rozpoczęcie:</strong> {{ experiment.start_date|date:"d.m.Y" }} {% if experiment.end_date %}<strong>• Koniec:</strong> {{ experiment.end_date|date:"d.m.Y" }}{% endif %}</p>
+        <p><strong>ID eksperymentu:</strong> <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 4px; font-weight: 700;">#{{ experiment.id }}</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <h3>📋 Użyte linie komórkowe</h3>
+    {% if samples %}
+    <table class="data-table">
+      <thead>
+        <tr><th>ID</th><th>Nazwa</th><th>Typ</th><th>Pochodzenie</th><th>Tkanki</th><th>Treatment</th><th>Stężenie</th><th>Replikaty</th></tr>
+      </thead>
+      <tbody>
+        {% for s in samples %}
+        <tr>
+          <td><strong>#{{ s.index_number }}</strong></td>
+          <td><strong>{{ s.cell_line.name }}</strong></td>
+          <td>{{ s.cell_line.get_cell_type_display }}</td>
+          <td>{{ s.cell_line.origin }}</td>
+          <td>{{ s.cell_line.tissue_type }}</td>
+          <td>{{ s.treatment }}</td>
+          <td><strong>{{ s.concentration }} {{ s.concentration_unit }}</strong></td>
+          <td>{{ s.replicate_number }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">Brak linii komórkowych w tym eksperymencie</div>
+    {% endif %}
+  </div>
+
+  <div class="table-container">
+    <h3>🐭 Użyte modele zwierzęce</h3>
+    {% if animals %}
+    <table class="data-table">
+      <thead>
+        <tr><th>ID</th><th>Nazwa</th><th>Gatunek</th><th>Strain</th><th>Wiek (tygodnie)</th><th>Grupa leczenia</th><th>Liczba zwierząt</th><th>Źródło</th></tr>
+      </thead>
+      <tbody>
+        {% for a in animals %}
+        <tr>
+          <td><strong>#{{ a.index_number }}</strong></td>
+          <td><strong>{{ a.animal_model.name }}</strong></td>
+          <td>{{ a.animal_model.get_species_display }}</td>
+          <td>{{ a.animal_model.strain }}</td>
+          <td>{{ a.animal_model.age_weeks }}</td>
+          <td>{{ a.treatment_group }}</td>
+          <td><strong>{{ a.number_of_animals }}</strong></td>
+          <td>{{ a.animal_model.source }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">Brak modeli zwierzęcych w tym eksperymencie</div>
+    {% endif %}
+  </div>
+
+  <div class="table-container">
+    <h3>📊 Rezultaty pomiarów</h3>
+    {% if results %}
+    <table class="data-table">
+      <thead>
+        <tr><th>ID</th><th>Parametr</th><th>Jednostka</th><th>Metoda pomiaru</th><th>Wartość</th><th>Data pomiaru</th></tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        <tr>
+          <td><strong>#{{ r.index_number }}</strong></td>
+          <td>{{ r.get_parameter_name_display|default:r.parameter_name }}</td>
+          <td>{{ r.unit }}</td>
+          <td>{{ r.method }}</td>
+          <td><strong>{{ r.value }}</strong></td>
+          <td>{{ r.measurement_date|date:"d.m.Y H:i" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">Brak wyników dla tego eksperymentu</div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block data_tables %}
+<!-- Ukryj tabele danych z landing.html na stronie szczegółów eksperymentu -->
+{% endblock %}

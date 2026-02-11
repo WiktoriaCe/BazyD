@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class CellLine(models.Model):
     """Linia komórkowa"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     CELL_TYPE_CHOICES = [
         ('cancer', 'Cancer'),
         ('normal', 'Normal'),
@@ -27,6 +28,10 @@ class CellLine(models.Model):
         ordering = ['name']
         verbose_name = 'Cell Line'
         verbose_name_plural = 'Cell Lines'
+        indexes = [
+            models.Index(fields=['created_by']),
+            models.Index(fields=['name']),
+        ]
     
     def __str__(self):
         return self.name
@@ -34,6 +39,7 @@ class CellLine(models.Model):
 
 class AnimalModel(models.Model):
     """Model zwierzęcy"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     SPECIES_CHOICES = [
         ('mouse', 'Mouse'),
         ('rat', 'Rat'),
@@ -56,6 +62,10 @@ class AnimalModel(models.Model):
     
     class Meta:
         ordering = ['species', 'name']
+        indexes = [
+            models.Index(fields=['created_by']),
+            models.Index(fields=['species', 'strain']),
+        ]
     
     def __str__(self):
         return f"{self.get_species_display()} - {self.strain} ({self.name})"
@@ -63,6 +73,7 @@ class AnimalModel(models.Model):
 
 class ResearchProtocol(models.Model):
     """Protokół badań"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     EXPERIMENT_TYPE_CHOICES = [
         ('in_vitro', 'In Vitro'),
         ('in_vivo', 'In Vivo'),
@@ -82,6 +93,10 @@ class ResearchProtocol(models.Model):
     
     class Meta:
         ordering = ['-created_date']
+        indexes = [
+            models.Index(fields=['created_by']),
+            models.Index(fields=['experiment_type']),
+        ]
     
     def __str__(self):
         return f"{self.title} (v{self.version})"
@@ -89,6 +104,7 @@ class ResearchProtocol(models.Model):
 
 class Experiment(models.Model):
     """Eksperyment"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     STATUS_CHOICES = [
         ('planning', 'Planning'),
         ('ongoing', 'Ongoing'),
@@ -114,6 +130,12 @@ class Experiment(models.Model):
     
     class Meta:
         ordering = ['-start_date']
+        indexes = [
+            models.Index(fields=['principal_investigator']),
+            models.Index(fields=['protocol']),
+            models.Index(fields=['status']),
+            models.Index(fields=['start_date']),
+        ]
     
     def __str__(self):
         return self.title
@@ -121,6 +143,7 @@ class Experiment(models.Model):
 
 class ExperimentSample(models.Model):
     """Połączenie między eksperymentem a linią komórkową (N-M)"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, related_name='experiment_samples')
     cell_line = models.ForeignKey(CellLine, on_delete=models.CASCADE)
     treatment = models.CharField(max_length=255, blank=True)  # np. exposure, drug
@@ -132,6 +155,10 @@ class ExperimentSample(models.Model):
     
     class Meta:
         unique_together = ('experiment', 'cell_line', 'treatment', 'concentration')
+        indexes = [
+            models.Index(fields=['experiment']),
+            models.Index(fields=['cell_line']),
+        ]
     
     def __str__(self):
         return f"{self.experiment.title} - {self.cell_line.name}"
@@ -139,6 +166,7 @@ class ExperimentSample(models.Model):
 
 class ExperimentAnimal(models.Model):
     """Połączenie między eksperymentem a modelem zwierzęcym (N-M)"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, related_name='experiment_animals')
     animal_model = models.ForeignKey(AnimalModel, on_delete=models.CASCADE)
     treatment_group = models.CharField(max_length=100)  # np. control, treatment_1
@@ -149,6 +177,10 @@ class ExperimentAnimal(models.Model):
     
     class Meta:
         unique_together = ('experiment', 'animal_model', 'treatment_group')
+        indexes = [
+            models.Index(fields=['experiment']),
+            models.Index(fields=['animal_model']),
+        ]
     
     def __str__(self):
         return f"{self.experiment.title} - {self.treatment_group}"
@@ -156,6 +188,7 @@ class ExperimentAnimal(models.Model):
 
 class Result(models.Model):
     """Wyniki eksperymentu"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, related_name='results')
     parameter_name = models.CharField(max_length=255)  # np. cell viability, tumor size
     value = models.FloatField()
@@ -168,6 +201,11 @@ class Result(models.Model):
     
     class Meta:
         ordering = ['-measurement_date']
+        indexes = [
+            models.Index(fields=['experiment']),
+            models.Index(fields=['sample']),
+            models.Index(fields=['animal_measurement']),
+        ]
     
     def __str__(self):
         return f"{self.parameter_name}: {self.value} {self.unit}"
@@ -175,6 +213,7 @@ class Result(models.Model):
 
 class GeneExpression(models.Model):
     """Ekspresja genów"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     EXPRESSION_METHOD_CHOICES = [
         ('qpcr', 'qPCR'),
         ('rna_seq', 'RNA-Seq'),
@@ -199,6 +238,11 @@ class GeneExpression(models.Model):
     
     class Meta:
         ordering = ['-measurement_date']
+        indexes = [
+            models.Index(fields=['sample']),
+            models.Index(fields=['animal_sample']),
+            models.Index(fields=['gene_name']),
+        ]
     
     def __str__(self):
         return f"{self.gene_name} - {self.expression_level} ({self.measurement_method})"
@@ -206,6 +250,7 @@ class GeneExpression(models.Model):
 
 class Documentation(models.Model):
     """Dokumentacja i notatki"""
+    index_number = models.IntegerField(unique=True, null=True, blank=True)
     DOC_TYPE_CHOICES = [
         ('note', 'Note'),
         ('protocol_amendment', 'Protocol Amendment'),
@@ -225,6 +270,11 @@ class Documentation(models.Model):
     
     class Meta:
         ordering = ['-created_date']
+        indexes = [
+            models.Index(fields=['experiment']),
+            models.Index(fields=['author']),
+            models.Index(fields=['document_type']),
+        ]
     
     def __str__(self):
         return self.title

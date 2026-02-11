@@ -1,0 +1,80 @@
+erDiagram
+    AUTH_USER {
+        INTEGER id PK
+        VARCHAR username
+    }
+    RESEARCH_CELLLINE {
+        INTEGER id PK
+        INTEGER index_number
+        VARCHAR name
+        INTEGER created_by_id FK
+    }
+    RESEARCH_ANIMALMODEL {
+        INTEGER id PK
+        INTEGER index_number
+        VARCHAR name
+        INTEGER created_by_id FK
+    }
+    RESEARCH_RESEARCHPROTOCOL {
+        INTEGER id PK
+        INTEGER index_number
+        VARCHAR title
+        INTEGER created_by_id FK
+    }
+    RESEARCH_EXPERIMENT {
+        INTEGER id PK
+        INTEGER index_number
+        VARCHAR title
+        INTEGER protocol_id FK
+        INTEGER principal_investigator_id FK
+    }
+    RESEARCH_EXPERIMENTSAMPLE {
+        INTEGER id PK
+        INTEGER index_number
+        INTEGER experiment_id FK
+        INTEGER cell_line_id FK
+    }
+    RESEARCH_EXPERIMENTANIMAL {
+        INTEGER id PK
+        INTEGER index_number
+        INTEGER experiment_id FK
+        INTEGER animal_model_id FK
+    }
+    RESEARCH_RESULT {
+        INTEGER id PK
+        INTEGER index_number
+        INTEGER experiment_id FK
+        INTEGER sample_id FK
+        INTEGER animal_measurement_id FK
+    }
+    RESEARCH_GENEEXPRESSION {
+        INTEGER id PK
+        INTEGER index_number
+        INTEGER sample_id FK
+        INTEGER animal_sample_id FK
+    }
+    RESEARCH_DOCUMENTATION {
+        INTEGER id PK
+        INTEGER index_number
+        INTEGER experiment_id FK
+        INTEGER author_id FK
+    }
+
+    AUTH_USER ||--o{ RESEARCH_CELLLINE : created_by
+    AUTH_USER ||--o{ RESEARCH_ANIMALMODEL : created_by
+    AUTH_USER ||--o{ RESEARCH_RESEARCHPROTOCOL : created_by
+    AUTH_USER ||--o{ RESEARCH_EXPERIMENT : principal_investigator
+    AUTH_USER ||--o{ RESEARCH_DOCUMENTATION : author
+
+    RESEARCH_RESEARCHPROTOCOL ||--o{ RESEARCH_EXPERIMENT : protocol
+    RESEARCH_EXPERIMENT ||--o{ RESEARCH_EXPERIMENTSAMPLE : has_samples
+    RESEARCH_CELLLINE ||--o{ RESEARCH_EXPERIMENTSAMPLE : used_in
+    RESEARCH_EXPERIMENT ||--o{ RESEARCH_EXPERIMENTANIMAL : has_animal_groups
+    RESEARCH_ANIMALMODEL ||--o{ RESEARCH_EXPERIMENTANIMAL : used_in
+
+    RESEARCH_EXPERIMENT ||--o{ RESEARCH_RESULT : has_results
+    RESEARCH_EXPERIMENTSAMPLE ||--o{ RESEARCH_RESULT : sample_results
+    RESEARCH_EXPERIMENTANIMAL ||--o{ RESEARCH_RESULT : animal_results
+
+    RESEARCH_EXPERIMENTSAMPLE ||--o{ RESEARCH_GENEEXPRESSION : gene_measurements
+    RESEARCH_EXPERIMENTANIMAL ||--o{ RESEARCH_GENEEXPRESSION : animal_gene_measurements

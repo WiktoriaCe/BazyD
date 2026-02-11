@@ -5,23 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Research Database - Django REST API</title>
+    <title>Baza badań medycznych - Django REST API</title>
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
 <body>
     <header>
         <div class="header-content container">
             <a href="/" class="logo">
-                🧬 Medical Research DB
+                🧬 Baza Badań Medycznych
             </a>
             <nav>
-                <a href="/">Home</a>
-                <a href="/admin/">Admin</a>
+                <a href="/">Strona główna</a>
+                <a href="/admin/">Panel administratora</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
+        {% block content %}
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
@@ -44,6 +45,7 @@
                 <div class="hero-image">🔬</div>
             </div>
         </section>
+        {% endblock %}
     </main>
 
 
@@ -73,6 +75,7 @@
     </section>
 
     <!-- Data Tables Section -->
+    {% block data_tables %}
     <section class="data-section" id="data">
         <div class="container">
             <h2>Wszystkie Dane z Bazy</h2>
@@ -99,6 +102,7 @@
                 <table class="data-table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nazwa użytkownika</th>
                             <th>Imię</th>
                             <th>Nazwisko</th>
@@ -110,9 +114,10 @@
                     <tbody>
                         {% for user in users %}
                         <tr>
-                            <td>{{ user.username|highlight:q }}</td>
-                            <td>{{ user.first_name|highlight:q }}</td>
-                            <td>{{ user.last_name|highlight:q }}</td>
+                            <td><strong>#{{ user.id }}</strong></td>
+                            <td><a href="{% url 'person_detail' user.id %}">{{ user.username|highlight:q }}</a></td>
+                            <td><a href="{% url 'person_detail' user.id %}">{{ user.first_name|highlight:q }}</a></td>
+                            <td><a href="{% url 'person_detail' user.id %}">{{ user.last_name|highlight:q }}</a></td>
                             <td>{{ user.email|highlight:q }}</td>
                             <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
                             <td>{% if user.is_active %}Tak{% else %}Nie{% endif %}</td>
@@ -128,6 +133,7 @@
                 <table class="data-table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nazwa</th>
                             <th>Typ</th>
                             <th>Pochodzenie</th>
@@ -138,6 +144,7 @@
                     <tbody>
                         {% for cell_line in cell_lines %}
                         <tr>
+                            <td><strong>#{{ cell_line.index_number }}</strong></td>
                             <td>{{ cell_line.name|highlight:q }}</td>
                             <td>{{ cell_line.get_cell_type_display|highlight:q }}</td>
                             <td>{{ cell_line.origin|highlight:q }}</td>
@@ -155,6 +162,7 @@
                 <table class="data-table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nazwa</th>
                             <th>Gatunek</th>
                             <th>Linia</th>
@@ -166,6 +174,7 @@
                     <tbody>
                         {% for animal in animal_models %}
                         <tr>
+                            <td><strong>#{{ animal.index_number }}</strong></td>
                             <td>{{ animal.name|highlight:q }}</td>
                             <td>{{ animal.get_species_display|highlight:q }}</td>
                             <td>{{ animal.strain|highlight:q }}</td>
@@ -182,24 +191,30 @@
             <div class="table-container">
                 <h3>📋 Eksperymenty</h3>
                 <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Tytuł</th>
-                            <th>Typ</th>
-                            <th>Status</th>
-                            <th>Data utworzenia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for experiment in experiments %}
-                        <tr>
-                            <td>{{ experiment.title|highlight:q }}</td>
-                            <td>{{ experiment.protocol.get_experiment_type_display|highlight:q }}</td>
-                            <td>{{ experiment.get_status_display }}</td>
-                            <td>{{ experiment.created_date|date:"d.m.Y" }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tytuł</th>
+                                                <th>Typ</th>
+                                                <th>Status</th>
+                                                <th>Badacz</th>
+                                                <th>Badacz ID</th>
+                                                <th>Data utworzenia</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for experiment in experiments %}
+                                            <tr>
+                                                <td><strong>#{{ experiment.index_number }}</strong></td>
+                                                <td>{{ experiment.title|highlight:q }}</td>
+                                                <td>{% if experiment.protocol %}{{ experiment.protocol.get_experiment_type_display|highlight:q }}{% else %}-{% endif %}</td>
+                                                <td>{{ experiment.get_status_display }}</td>
+                                                <td><a href="{% url 'person_detail' experiment.principal_investigator.id %}">{{ experiment.principal_investigator.get_full_name|default:experiment.principal_investigator.username }}</a></td>
+                                                <td>{{ experiment.principal_investigator.id }}</td>
+                                                <td>{{ experiment.created_date|date:"d.m.Y" }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
                 </table>
             </div>
 
@@ -207,19 +222,20 @@
 
         </div>
     </section>
+    {% endblock %}
 
 
 
     <footer>
         <div class="container">
-            <p>🧬 <strong>Medical Research Database</strong> - Django REST API System for In Vitro/In Vivo Research Documentation</p>
-            <p style="margin-top: 20px; font-size: 14px; color: #999;">Built with ❤️ • 2026</p>
+            <p>🧬 <strong>Baza Badań Medycznych</strong> - System dokumentacji badań in vitro/in vivo oparty na Django REST API</p>
+            <p style="margin-top: 20px; font-size: 14px; color: #999;">Stworzone z ❤️ • 2026</p>
         </div>
     </footer>
 
     {% if request.user.is_authenticated %}
     <script>
-        console.log("Logged in as: {{ request.user.username }}");
+        console.log("Zalogowany jako: {{ request.user.username }}");
     </script>
     {% endif %}
 </body>

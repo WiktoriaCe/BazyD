@@ -1,0 +1,35 @@
+{% extends 'landing.html' %}
+
+{% block content %}
+<h1>Lista eksperymentów</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Tytuł</th>
+      <th>Badacz</th>
+      <th>Badacz ID</th>
+      <th>Typ protokołu</th>
+      <th>Start</th>
+      <th>Status</th>
+      <th>Szczegóły</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for exp in experiments %}
+    <tr>
+      <td>{{ exp.index_number }}</td>
+      <td>{{ exp.title }}</td>
+      <td>{{ exp.principal_investigator.get_full_name|default:exp.principal_investigator.username }}</td>
+      <td>{{ exp.principal_investigator.id }}</td>
+      <td>{{ exp.protocol.title }}</td>
+      <td>{{ exp.start_date }}</td>
+      <td>{{ exp.get_status_display }}</td>
+      <td><a href="{% url 'experiment_detail' exp.pk %}">Pokaż</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="8">Brak eksperymentów</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

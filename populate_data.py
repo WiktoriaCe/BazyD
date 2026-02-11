@@ -133,13 +133,79 @@ def create_sample_data():
             'passage_number': 110,
             'description': 'Mouse motor neuron cells'
         },
+        {
+            'name': 'HT-29',
+            'cell_type': 'cancer',
+            'origin': 'human',
+            'tissue_type': 'epithelial',
+            'passage_number': 140,
+            'description': 'Human colorectal adenocarcinoma cells'
+        },
+        {
+            'name': 'Caco-2',
+            'cell_type': 'cancer',
+            'origin': 'human',
+            'tissue_type': 'epithelial',
+            'passage_number': 125,
+            'description': 'Human colorectal carcinoma cells'
+        },
+        {
+            'name': '3T3',
+            'cell_type': 'normal',
+            'origin': 'mouse',
+            'tissue_type': 'fibroblast',
+            'passage_number': 250,
+            'description': 'Mouse embryonic fibroblasts'
+        },
+        {
+            'name': 'PC-12',
+            'cell_type': 'cancer',
+            'origin': 'rat',
+            'tissue_type': 'neuronal',
+            'passage_number': 180,
+            'description': 'Rat pheochromocytoma cells'
+        },
+        {
+            'name': 'COS-7',
+            'cell_type': 'normal',
+            'origin': 'monkey',
+            'tissue_type': 'fibroblast',
+            'passage_number': 200,
+            'description': 'African green monkey kidney fibroblasts'
+        },
+        {
+            'name': 'BHK-21',
+            'cell_type': 'normal',
+            'origin': 'hamster',
+            'tissue_type': 'fibroblast',
+            'passage_number': 220,
+            'description': 'Baby hamster kidney cells'
+        },
+        {
+            'name': 'SF9',
+            'cell_type': 'normal',
+            'origin': 'insect',
+            'tissue_type': 'ovarian',
+            'passage_number': 300,
+            'description': 'Spodoptera frugiperda ovarian cells'
+        },
+        {
+            'name': 'Sf21',
+            'cell_type': 'normal',
+            'origin': 'insect',
+            'tissue_type': 'ovarian',
+            'passage_number': 280,
+            'description': 'Spodoptera frugiperda cell line variant'
+        },
     ]
     
     cell_lines = []
-    for data in cell_lines_data:
+    for i, data in enumerate(cell_lines_data):
+        # Przypisz każdą linię komórkową do innego użytkownika
+        assigned_researcher = researchers[i % len(researchers)]
         cl, _ = CellLine.objects.get_or_create(
             name=data['name'],
-            defaults={**data, 'created_by': researcher}
+            defaults={**data, 'created_by': assigned_researcher}
         )
         cell_lines.append(cl)
     print(f"✓ Stworzone {len(cell_lines)} linii komórkowych")
@@ -147,7 +213,7 @@ def create_sample_data():
     # Stwórz modele zwierzęce
     animal_models_data = [
         {
-            'name': 'C57BL/6-Mouse-001',
+            'name': 'Myszak C57BL/6',
             'species': 'mouse',
             'strain': 'C57BL/6',
             'age_weeks': 12,
@@ -157,7 +223,7 @@ def create_sample_data():
             'source': 'Charles River Labs'
         },
         {
-            'name': 'BALB/c-Mouse-001',
+            'name': 'Myszak BALB/c',
             'species': 'mouse',
             'strain': 'BALB/c',
             'age_weeks': 10,
@@ -167,7 +233,7 @@ def create_sample_data():
             'source': 'Charles River Labs'
         },
         {
-            'name': 'Sprague-Dawley-Rat-001',
+            'name': 'Szczur Sprague Dawley',
             'species': 'rat',
             'strain': 'Sprague Dawley',
             'age_weeks': 16,
@@ -177,7 +243,7 @@ def create_sample_data():
             'source': 'Charles River Labs'
         },
         {
-            'name': 'NOD-SCID-Mouse-001',
+            'name': 'Myszak NOD/SCID',
             'species': 'mouse',
             'strain': 'NOD/SCID',
             'age_weeks': 8,
@@ -187,7 +253,7 @@ def create_sample_data():
             'source': 'Jackson Laboratory'
         },
         {
-            'name': 'FVB-Mouse-001',
+            'name': 'Myszak FVB/N',
             'species': 'mouse',
             'strain': 'FVB/N',
             'age_weeks': 14,
@@ -197,7 +263,7 @@ def create_sample_data():
             'source': 'Charles River Labs'
         },
         {
-            'name': 'Lewis-Rat-001',
+            'name': 'Szczur Lewis',
             'species': 'rat',
             'strain': 'Lewis',
             'age_weeks': 12,
@@ -207,7 +273,7 @@ def create_sample_data():
             'source': 'Charles River Labs'
         },
         {
-            'name': 'AB-Zebrafish-001',
+            'name': 'Ryba AB',
             'species': 'zebrafish',
             'strain': 'AB',
             'age_weeks': 24,
@@ -217,7 +283,7 @@ def create_sample_data():
             'source': 'University Fish Facility'
         },
         {
-            'name': 'TuEL-Drosophila-001',
+            'name': 'Owsiuszek w1118',
             'species': 'drosophila',
             'strain': 'w1118',
             'age_weeks': 1,
@@ -226,13 +292,85 @@ def create_sample_data():
             'health_status': 'healthy',
             'source': 'Bloomington Drosophila Stock Center'
         },
+        {
+            'name': 'Mysz 129/SvJ',
+            'species': 'mouse',
+            'strain': '129/SvJ',
+            'age_weeks': 12,
+            'sex': 'M',
+            'weight_grams': 26.0,
+            'health_status': 'healthy',
+            'source': 'Jackson Laboratory'
+        },
+        {
+            'name': 'Mysz DBA/2',
+            'species': 'mouse',
+            'strain': 'DBA/2',
+            'age_weeks': 11,
+            'sex': 'F',
+            'weight_grams': 23.5,
+            'health_status': 'healthy',
+            'source': 'Charles River Labs'
+        },
+        {
+            'name': 'Mysz outbred Swiss',
+            'species': 'mouse',
+            'strain': 'Outbred Swiss',
+            'age_weeks': 9,
+            'sex': 'M',
+            'weight_grams': 28.5,
+            'health_status': 'healthy',
+            'source': 'Charles River Labs'
+        },
+        {
+            'name': 'Szczur Fisher 344',
+            'species': 'rat',
+            'strain': 'Fisher 344',
+            'age_weeks': 14,
+            'sex': 'M',
+            'weight_grams': 300,
+            'health_status': 'healthy',
+            'source': 'Charles River Labs'
+        },
+        {
+            'name': 'Szczur Long-Evans',
+            'species': 'rat',
+            'strain': 'Long-Evans',
+            'age_weeks': 13,
+            'sex': 'F',
+            'weight_grams': 280,
+            'health_status': 'healthy',
+            'source': 'Charles River Labs'
+        },
+        {
+            'name': 'Ryba TL',
+            'species': 'zebrafish',
+            'strain': 'TL',
+            'age_weeks': 20,
+            'sex': 'M',
+            'weight_grams': 0.5,
+            'health_status': 'healthy',
+            'source': 'University Fish Facility'
+        },
+        {
+            'name': 'Ryba WIK',
+            'species': 'zebrafish',
+            'strain': 'WIK',
+            'age_weeks': 22,
+            'sex': 'F',
+            'weight_grams': 0.55,
+            'health_status': 'healthy',
+            'source': 'University Fish Facility'
+        },
     ]
     
     animal_models = []
-    for data in animal_models_data:
+    for i, data in enumerate(animal_models_data):
+        # Przypisz każdy model zwierzęcy do innego użytkownika
+        assigned_researcher = researchers[i % len(researchers)]
         am, _ = AnimalModel.objects.get_or_create(
             name=data['name'],
-            defaults={**data, 'created_by': researcher}
+            defaults={**data, 'created_by': assigned_researcher}
         )
         animal_models.append(am)
     print(f"✓ Stworzone {len(animal_models)} modele zwierzęce")
@@ -299,7 +437,7 @@ def create_sample_data():
         protocols.append(p)
     print(f"✓ Stworzone {len(protocols)} protokoły")
     
-    # Stwórz eksperymenty
+    # Stwórz eksperymenty - każdy z wyjątkowym zajęciem (linia komórkowa LUB model zwierzęcy)
     start_date = datetime.now().date() - timedelta(days=30)
     
     experiments_data = [
@@ -309,8 +447,10 @@ def create_sample_data():
             'status': 'completed',
             'start_date': start_date,
             'end_date': start_date + timedelta(days=7),
-            'principal_investigator': researcher,
+            'principal_investigator': researchers[0],
             'lab': 'Lab A - Oncology',
+            'cell_line': cell_lines[0],  # HeLa
+            'animal_model': None,
         },
         {
             'title': 'Drug Y Efficacy in C57BL/6 Tumor Model',
@@ -318,8 +458,10 @@ def create_sample_data():
             'status': 'ongoing',
             'start_date': start_date + timedelta(days=14),
             'end_date': None,
-            'principal_investigator': researcher,
+            'principal_investigator': researchers[1],
             'lab': 'Lab B - In Vivo',
+            'cell_line': None,
+            'animal_model': animal_models[4],  # Myszak C57BL/6
         },
         {
             'title': 'Gene Expression Response to Treatment',
@@ -327,8 +469,10 @@ def create_sample_data():
             'status': 'ongoing',
             'start_date': start_date + timedelta(days=20),
             'end_date': None,
-            'principal_investigator': researcher,
+            'principal_investigator': researchers[2],
             'lab': 'Lab A - Oncology',
+            'cell_line': cell_lines[1],  # A549
+            'animal_model': None,
         },
         {
             'title': 'Flow Cytometry - Apoptosis Assessment',
@@ -336,8 +480,10 @@ def create_sample_data():
             'status': 'completed',
             'start_date': start_date - timedelta(days=15),
             'end_date': start_date - timedelta(days=10),
-            'principal_investigator': researchers[1],
+            'principal_investigator': researchers[3],
             'lab': 'Lab C - Flow Cytometry',
+            'cell_line': cell_lines[2],  # MCF-7
+            'animal_model': None,
         },
         {
             'title': 'Protein Expression in Drug-Treated Cells',
@@ -345,17 +491,21 @@ def create_sample_data():
             'status': 'ongoing',
             'start_date': start_date + timedelta(days=5),
             'end_date': None,
-            'principal_investigator': researchers[2],
+            'principal_investigator': researchers[4],
             'lab': 'Lab A - Oncology',
+            'cell_line': cell_lines[3],  # CHO
+            'animal_model': None,
         },
         {
-            'title': 'Tumor Tissue Immunostaining',
+            'title': 'Tumor Tissue Immunostaining Study',
             'protocol': protocols[5],
             'status': 'completed',
             'start_date': start_date - timedelta(days=20),
             'end_date': start_date - timedelta(days=12),
-            'principal_investigator': researchers[3],
+            'principal_investigator': researchers[5],
             'lab': 'Lab D - Pathology',
+            'cell_line': None,
+            'animal_model': animal_models[12],  # Szczur Lewis
         },
         {
             'title': 'Pharmacokinetic Profile - Drug A',
@@ -363,8 +513,10 @@ def create_sample_data():
             'status': 'ongoing',
             'start_date': start_date + timedelta(days=2),
             'end_date': None,
-            'principal_investigator': researchers[4],
+            'principal_investigator': researchers[6],
             'lab': 'Lab E - PK/PD',
+            'cell_line': None,
+            'animal_model': animal_models[13],  # Szczur Sprague Dawley
         },
         {
             'title': 'Long-term Toxicity Study in Rats',
@@ -372,42 +524,41 @@ def create_sample_data():
             'status': 'ongoing',
             'start_date': start_date - timedelta(days=30),
             'end_date': None,
-            'principal_investigator': researchers[5],
+            'principal_investigator': researchers[7],
             'lab': 'Lab B - In Vivo',
+            'cell_line': None,
+            'animal_model': animal_models[0],  # Mysz 129/SvJ
         },
     ]
     
     experiments = []
+    experiments_spec = {}  # Przechowaj info czy eksperyment ma cell_line czy animal_model
     for data in experiments_data:
+        cell_line = data.pop('cell_line')
+        animal_model = data.pop('animal_model')
         exp, _ = Experiment.objects.get_or_create(
             title=data['title'],
             start_date=data['start_date'],
             defaults=data
         )
         experiments.append(exp)
+        experiments_spec[exp.id] = {'cell_line': cell_line, 'animal_model': animal_model}
     print(f"✓ Stworzone {len(experiments)} eksperymenty")
     
-    # Dodaj próbki do eksperymentu
-    exp_samples_data = [
-        {'experiment': experiments[0], 'cell_line': cell_lines[0], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 24},
-        {'experiment': experiments[0], 'cell_line': cell_lines[0], 'treatment': 'Drug X', 'concentration': 1, 'duration_hours': 24},
-        {'experiment': experiments[0], 'cell_line': cell_lines[0], 'treatment': 'Drug X', 'concentration': 10, 'duration_hours': 24},
-        {'experiment': experiments[0], 'cell_line': cell_lines[0], 'treatment': 'Drug X', 'concentration': 100, 'duration_hours': 24},
-        
-        {'experiment': experiments[2], 'cell_line': cell_lines[1], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 6},
-        {'experiment': experiments[2], 'cell_line': cell_lines[1], 'treatment': 'Drug Y', 'concentration': 5, 'duration_hours': 6},
-        
-        {'experiment': experiments[3], 'cell_line': cell_lines[2], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 48},
-        {'experiment': experiments[3], 'cell_line': cell_lines[2], 'treatment': 'Drug Z', 'concentration': 2.5, 'duration_hours': 48},
-        {'experiment': experiments[3], 'cell_line': cell_lines[2], 'treatment': 'Drug Z', 'concentration': 5.0, 'duration_hours': 48},
-        
-        {'experiment': experiments[4], 'cell_line': cell_lines[3], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 4},
-        {'experiment': experiments[4], 'cell_line': cell_lines[3], 'treatment': 'Compound A', 'concentration': 1, 'duration_hours': 4},
-        {'experiment': experiments[4], 'cell_line': cell_lines[3], 'treatment': 'Compound A', 'concentration': 10, 'duration_hours': 4},
-        
-        {'experiment': experiments[6], 'cell_line': cell_lines[4], 'treatment': 'Control', 'concentration': 0, 'duration_hours': 12},
-        {'experiment': experiments[6], 'cell_line': cell_lines[4], 'treatment': 'Drug A', 'concentration': 0.5, 'duration_hours': 12},
-    ]
+    # Dodaj próbki DO WYBRANYCH eksperymentów (tylko te z cell_line)
+    exp_samples_data = []
+    for i, exp in enumerate(experiments):
+        cell_line = experiments_spec[exp.id]['cell_line']
+        if cell_line:  # Tylko dla eksperymentów z linią komórkową
+            # Dodaj 3 próbki na eksperyment
+            for treatment_num in range(3):
+                exp_samples_data.append({
+                    'experiment': exp,
+                    'cell_line': cell_line,
+                    'treatment': f'{cell_line.name} Treatment {treatment_num + 1}',
+                    'concentration': (treatment_num + 1) * 5,
+                    'duration_hours': 24
+                })
     
     samples = []
     for data in exp_samples_data:
@@ -421,11 +572,25 @@ def create_sample_data():
         samples.append(sample)
     print(f"✓ Dodane {len(samples)} próbki in vitro")
     
-    # Dodaj zwierzęta do eksperymentu
-    exp_animals_data = [
-        {'experiment': experiments[1], 'animal_model': animal_models[0], 'treatment_group': 'Control', 'number_of_animals': 5},
-        {'experiment': experiments[1], 'animal_model': animal_models[0], 'treatment_group': 'Drug Y 10mg/kg', 'number_of_animals': 5, 'dosage': '10 mg/kg'},
-    ]
+    # Dodaj zwierzęta DO WYBRANYCH eksperymentów (tylko te z animal_model)
+    exp_animals_data = []
+    for i, exp in enumerate(experiments):
+        animal_model = experiments_spec[exp.id]['animal_model']
+        if animal_model:  # Tylko dla eksperymentów z modelem zwierzęcym
+            # Dodaj 2 grupy zwierząt (Control i Treatment)
+            exp_animals_data.append({
+                'experiment': exp,
+                'animal_model': animal_model,
+                'treatment_group': 'Control',
+                'number_of_animals': 5
+            })
+            exp_animals_data.append({
+                'experiment': exp,
+                'animal_model': animal_model,
+                'treatment_group': 'Treatment',
+                'number_of_animals': 5,
+                'dosage': '10 mg/kg'
+            })
     
     exp_animals = []
     for data in exp_animals_data:
@@ -438,21 +603,17 @@ def create_sample_data():
         exp_animals.append(ea)
     print(f"✓ Dodane {len(exp_animals)} grupy zwierząt")
     
-    # Dodaj wyniki
-    results_data = [
-        {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[0], 'value': 100},
-        {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[1], 'value': 95},
-        {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[2], 'value': 75},
-        {'experiment': experiments[0], 'parameter_name': 'cell_viability', 'unit': '%', 'method': 'MTT assay', 'sample': samples[3], 'value': 45},
-        
-        {'experiment': experiments[3], 'parameter_name': 'apoptotic_cells', 'unit': '%', 'method': 'Flow Cytometry', 'sample': samples[6], 'value': 5.2},
-        {'experiment': experiments[3], 'parameter_name': 'apoptotic_cells', 'unit': '%', 'method': 'Flow Cytometry', 'sample': samples[7], 'value': 32.5},
-        {'experiment': experiments[3], 'parameter_name': 'apoptotic_cells', 'unit': '%', 'method': 'Flow Cytometry', 'sample': samples[8], 'value': 58.3},
-        
-        {'experiment': experiments[4], 'parameter_name': 'protein_level', 'unit': 'ng/mL', 'method': 'Western Blot', 'sample': samples[9], 'value': 150},
-        {'experiment': experiments[4], 'parameter_name': 'protein_level', 'unit': 'ng/mL', 'method': 'Western Blot', 'sample': samples[10], 'value': 240},
-        {'experiment': experiments[4], 'parameter_name': 'protein_level', 'unit': 'ng/mL', 'method': 'Western Blot', 'sample': samples[11], 'value': 380},
-    ]
+    # Dodaj wyniki dla próbek
+    results_data = []
+    for i, sample in enumerate(samples[:6]):  # Dodaj wyniki dla pierwszych 6 próbek
+        results_data.append({
+            'experiment': sample.experiment,
+            'parameter_name': 'cell_viability',
+            'unit': '%',
+            'method': 'MTT assay',
+            'sample': sample,
+            'value': max(100 - i * 10, 20)
+        })
     
     results = []
     for i, data in enumerate(results_data):
@@ -467,8 +628,8 @@ def create_sample_data():
     genes = ['BRCA1', 'TP53', 'EGFR', 'HER2', 'MYC', 'GAPDH']
     
     gene_expressions = []
-    for sample in samples[:4]:
-        for gene in genes[:3]:
+    for sample in samples[:6]:  # Dodaj geny dla pierwszych 6 próbek
+        for gene in genes[:2]:
             ge = GeneExpression.objects.create(
                 gene_name=gene,
                 gene_id=f'ENSG{randint(100000000, 999999999)}',
@@ -483,9 +644,9 @@ def create_sample_data():
     
     # Dodaj dokumentację
     docs_data = [
-        {'experiment': experiments[0], 'title': 'Protocol Amendment', 'document_type': 'protocol_amendment', 'content': 'Increased cell density for better toxicity detection'},
-        {'experiment': experiments[1], 'title': 'Incident Report', 'document_type': 'incident_report', 'content': 'One animal showed unexpected weight loss on day 5'},
-        {'experiment': experiments[2], 'title': 'Lab Notes', 'document_type': 'note', 'content': 'RNA quality was excellent (RIN > 8.0) for all samples'},
+        {'experiment': experiments[0], 'title': 'Protocol Amendment', 'document_type': 'protocol_amendment', 'content': 'Standard MTT assay with HeLa cells - optimized for 24-hour assay'},
+        {'experiment': experiments[1], 'title': 'In Vivo Report', 'document_type': 'results', 'content': 'Tumor growth inhibition study in C57BL/6 mice with drug Y'},
+        {'experiment': experiments[2], 'title': 'Lab Notes', 'document_type': 'note', 'content': 'Gene expression data validated by qPCR analysis'},
     ]
     
     docs = []

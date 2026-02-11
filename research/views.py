@@ -7,8 +7,11 @@ for CellLine, AnimalModel and Experiment (protected to logged-in users).
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 from .forms import CellLineForm, AnimalModelForm, ExperimentForm
+from .models import Experiment
+from django.shortcuts import get_object_or_404
 
 
 def placeholder(request):
@@ -60,3 +63,37 @@ def add_experiment(request):
     else:
         form = ExperimentForm()
     return render(request, 'research/add_experiment.html', {'form': form})
+
+
+def experiment_list(request):
+    experiments = Experiment.objects.select_related('principal_investigator', 'protocol')
+    experiments = experiments.prefetch_related('experiment_samples__cell_line', 'experiment_animals__animal_model').all().order_by('-start_date')
+    return render(request, 'research/experiment_list.html', {'experiments': experiments})
+
+
+def experiment_detail(request, pk):
+    exp = get_object_or_404(Experiment, pk=pk)
+    # prefetch related through objects
+    samples = exp.experiment_samples.select_related('cell_line').all()
+    animals = exp.experiment_animals.select_related('animal_model').all()
+    results = exp.results.all().order_by('-measurement_date')
+    return render(request, 'research/experiment_detail.html', {
+        'experiment': exp,
+        'samples': samples,
+        'animals': animals,
+        'results': results,
+    })
+
+
+def person_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    # objects the user created or is PI of
+    cell_lines = user.cell_lines.all()
+    animal_models = user.animal_models.all()
+    experiments = Experiment.objects.filter(principal_investigator=user).select_related('protocol')
+    return render(request, 'research/person_detail.html', {
+        'person': user,
+        'cell_lines': cell_lines,
+        'animal_models': animal_models,
+        'experiments': experiments,
+    })
